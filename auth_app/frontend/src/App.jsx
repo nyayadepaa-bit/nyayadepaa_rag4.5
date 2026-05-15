@@ -544,6 +544,12 @@ export default function App() {
   const [adminPass, setAdminPass] = useState('');
   const [adminError, setAdminError] = useState('');
   const [adminLoading, setAdminLoading] = useState(false);
+  const [guestModalOpen, setGuestModalOpen] = useState(false);
+  const [guestName, setGuestName] = useState('');
+  const [guestAge, setGuestAge] = useState('');
+  const [guestCity, setGuestCity] = useState('');
+  const [guestError, setGuestError] = useState('');
+  const [guestLoading, setGuestLoading] = useState(false);
   const [showLanding, setShowLanding] = useState(true);
 
   const LANG_OPTIONS = [
@@ -604,12 +610,35 @@ export default function App() {
   // Count total selected chips
   const totalSelected = Object.values(selectedChips).reduce((a, v) => a + v.length, 0);
 
+  async function guestLogin() {
+    if (!guestName.trim() || !guestAge || !guestCity.trim()) { setGuestError('Please fill all fields'); return; }
+    if (isNaN(guestAge) || guestAge < 10 || guestAge > 120) { setGuestError('Please enter a valid age'); return; }
+    setGuestError(''); setGuestLoading(true);
+    try {
+      const r = await fetch(`${API_BASE}/auth/guest-login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: guestName.trim(), age: parseInt(guestAge), city: guestCity.trim() })
+      });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.detail || 'Failed to start session');
+      sessionStorage.setItem('guest_token', d.access_token);
+      setGuestModalOpen(false);
+      setShowLanding(false);
+    } catch (e) {
+      setGuestError(e.message === 'Failed to fetch' ? 'Server unreachable' : e.message);
+    } finally { setGuestLoading(false); }
+  }
+
   async function adminLogin() {
     if (!adminEmail.trim() || !adminPass) { setAdminError('Enter email and password'); return; }
     setAdminError(''); setAdminLoading(true);
     try {
-      const fd = new FormData(); fd.append('username', adminEmail.trim()); fd.append('password', adminPass);
-      const r = await fetch(`${API_BASE}/auth/login`, { method: 'POST', body: fd });
+      const r = await fetch(`${API_BASE}/auth/admin/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: adminEmail.trim(), password: adminPass })
+      });
       const d = await r.json();
       if (!r.ok) throw new Error(d.detail || 'Login failed');
       if (d.user?.role !== 'admin') throw new Error('Admin access required');
@@ -735,11 +764,11 @@ export default function App() {
             actual IPC sections, court precedents, and government resources.
           </p>
           <div className="landing-hero-actions">
-            <button className="landing-cta-primary" onClick={() => setShowLanding(false)}>
+            <button className="landing-cta-primary" onClick={() => setGuestModalOpen(true)}>
               Start Free Consultation
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
             </button>
-            <button className="landing-cta-secondary" onClick={() => { setShowLanding(false); setActiveTab('Legal library'); }}>
+            <button className="landing-cta-secondary" onClick={() => { setGuestModalOpen(true); }}>
               Explore Legal Library
             </button>
           </div>
@@ -795,7 +824,7 @@ export default function App() {
         <section className="landing-bottom-cta">
           <h2>Ready to understand your legal rights?</h2>
           <p>Start a free, confidential consultation with NyayaSakhi right now.</p>
-          <button className="landing-cta-primary" onClick={() => setShowLanding(false)}>
+          <button className="landing-cta-primary" onClick={() => setGuestModalOpen(true)}>
             Start Consultation
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
           </button>
@@ -847,6 +876,61 @@ export default function App() {
               <div style={{ textAlign: 'center', marginTop: 12 }}>
                 <button onClick={() => setAdminModalOpen(false)}
                   style={{ background: 'none', border: 'none', fontSize: 12, color: '#999', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Guest Registration Modal */}
+        {guestModalOpen && (
+          <div style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }} onClick={(e) => { if (e.target === e.currentTarget) setGuestModalOpen(false); }}>
+            <div style={{
+              background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '32px',
+              width: 380, maxWidth: '95vw', boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+            }}>
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ fontSize: 18, fontWeight: 700, color: '#111' }}>Get Started</div>
+                <div style={{ fontSize: 13, color: '#666', marginTop: 4 }}>Tell us a bit about yourself so NyayaSakhi can assist you better. Your info is confidential.</div>
+              </div>
+              <div style={{ marginBottom: 14 }}>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Your Name / Alias</label>
+                <input type="text" value={guestName} onChange={e => setGuestName(e.target.value)}
+                  placeholder="How should we address you?"
+                  style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                  onKeyDown={e => e.key === 'Enter' && document.getElementById('g-age')?.focus()}
+                />
+              </div>
+              <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
+                <div style={{ flex: 1 }}>
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Age</label>
+                  <input id="g-age" type="number" value={guestAge} onChange={e => setGuestAge(e.target.value)}
+                    placeholder="E.g. 28" min="10" max="120"
+                    style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                    onKeyDown={e => e.key === 'Enter' && document.getElementById('g-city')?.focus()}
+                  />
+                </div>
+                <div style={{ flex: 2 }}>
+                  <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>City / Location</label>
+                  <input id="g-city" type="text" value={guestCity} onChange={e => setGuestCity(e.target.value)}
+                    placeholder="E.g. Mumbai"
+                    style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                    onKeyDown={e => e.key === 'Enter' && guestLogin()}
+                  />
+                </div>
+              </div>
+              {guestError && (
+                <div style={{ padding: '10px 12px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, fontSize: 13, color: '#dc2626', marginBottom: 16 }}>{guestError}</div>
+              )}
+              <button onClick={guestLogin} disabled={guestLoading}
+                style={{ width: '100%', padding: '12px', borderRadius: 8, background: '#2563eb', color: '#fff', fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit', transition: 'background 0.2s' }}>
+                {guestLoading ? 'Starting...' : 'Start Consultation'}
+              </button>
+              <div style={{ textAlign: 'center', marginTop: 14 }}>
+                <button onClick={() => setGuestModalOpen(false)}
+                  style={{ background: 'none', border: 'none', fontSize: 13, color: '#999', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
               </div>
             </div>
           </div>
