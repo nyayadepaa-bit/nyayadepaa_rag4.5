@@ -914,11 +914,108 @@ export default function App() {
                 </div>
                 <div style={{ flex: 2 }}>
                   <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>City / Location</label>
-                  <input id="g-city" type="text" value={guestCity} onChange={e => setGuestCity(e.target.value)}
-                    placeholder="E.g. Mumbai"
-                    style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                  <select id="g-city" value={guestCity} onChange={e => setGuestCity(e.target.value)}
+                    style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', appearance: 'none', background: '#fff' }}
                     onKeyDown={e => e.key === 'Enter' && guestLogin()}
-                  />
+                  >
+                    <option value="" disabled>Select a city</option>
+                    <option value="Mumbai">Mumbai</option>
+                    <option value="Delhi">Delhi</option>
+                    <option value="Bangalore">Bangalore</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Ahmedabad">Ahmedabad</option>
+                    <option value="Chennai">Chennai</option>
+                    <option value="Kolkata">Kolkata</option>
+                    <option value="Surat">Surat</option>
+                    <option value="Pune">Pune</option>
+                    <option value="Jaipur">Jaipur</option>
+                    <option value="Lucknow">Lucknow</option>
+                    <option value="Kanpur">Kanpur</option>
+                    <option value="Nagpur">Nagpur</option>
+                    <option value="Indore">Indore</option>
+                    <option value="Thane">Thane</option>
+                    <option value="Bhopal">Bhopal</option>
+                    <option value="Visakhapatnam">Visakhapatnam</option>
+                    <option value="Patna">Patna</option>
+                    <option value="Vadodara">Vadodara</option>
+                    <option value="Ghaziabad">Ghaziabad</option>
+                    <option value="Ludhiana">Ludhiana</option>
+                    <option value="Agra">Agra</option>
+                    <option value="Nashik">Nashik</option>
+                    <option value="Faridabad">Faridabad</option>
+                    <option value="Meerut">Meerut</option>
+                    <option value="Rajkot">Rajkot</option>
+                    <option value="Kalyan-Dombivli">Kalyan-Dombivli</option>
+                    <option value="Vasai-Virar">Vasai-Virar</option>
+                    <option value="Varanasi">Varanasi</option>
+                    <option value="Srinagar">Srinagar</option>
+                    <option value="Aurangabad">Aurangabad</option>
+                    <option value="Dhanbad">Dhanbad</option>
+                    <option value="Amritsar">Amritsar</option>
+                    <option value="Navi Mumbai">Navi Mumbai</option>
+                    <option value="Allahabad">Allahabad</option>
+                    <option value="Ranchi">Ranchi</option>
+                    <option value="Howrah">Howrah</option>
+                    <option value="Coimbatore">Coimbatore</option>
+                    <option value="Jabalpur">Jabalpur</option>
+                    <option value="Gwalior">Gwalior</option>
+                    <option value="Vijayawada">Vijayawada</option>
+                    <option value="Jodhpur">Jodhpur</option>
+                    <option value="Madurai">Madurai</option>
+                    <option value="Raipur">Raipur</option>
+                    <option value="Kota">Kota</option>
+                    <option value="Guwahati">Guwahati</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Solapur">Solapur</option>
+                    <option value="Hubli-Dharwad">Hubli-Dharwad</option>
+                    <option value="Mysore">Mysore</option>
+                    <option value="Tiruchirappalli">Tiruchirappalli</option>
+                    <option value="Bareilly">Bareilly</option>
+                    <option value="Aligarh">Aligarh</option>
+                    <option value="Tiruppur">Tiruppur</option>
+                    <option value="Gurgaon">Gurgaon</option>
+                    <option value="Moradabad">Moradabad</option>
+                    <option value="Jalandhar">Jalandhar</option>
+                    <option value="Bhubaneswar">Bhubaneswar</option>
+                    <option value="Salem">Salem</option>
+                    <option value="Warangal">Warangal</option>
+                    <option value="Mira-Bhayandar">Mira-Bhayandar</option>
+                    <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+                    <option value="Bhiwandi">Bhiwandi</option>
+                    <option value="Saharanpur">Saharanpur</option>
+                    <option value="Guntur">Guntur</option>
+                    <option value="Amravati">Amravati</option>
+                    <option value="Bikaner">Bikaner</option>
+                    <option value="Noida">Noida</option>
+                    <option value="Jamshedpur">Jamshedpur</option>
+                    <option value="Bhilai">Bhilai</option>
+                    <option value="Cuttack">Cuttack</option>
+                    <option value="Kochi">Kochi</option>
+                    <option value="Udaipur">Udaipur</option>
+                    <option value="Bhavnagar">Bhavnagar</option>
+                    <option value="Dehradun">Dehradun</option>
+                    <option value="Asansol">Asansol</option>
+                    <option value="Nanded">Nanded</option>
+                    <option value="Ajmer">Ajmer</option>
+                    <option value="Jamnagar">Jamnagar</option>
+                    <option value="Ujjain">Ujjain</option>
+                    <option value="Sangli">Sangli</option>
+                    <option value="Loni">Loni</option>
+                    <option value="Jhansi">Jhansi</option>
+                    <option value="Pondicherry">Pondicherry</option>
+                    <option value="Nellore">Nellore</option>
+                    <option value="Jammu">Jammu</option>
+                    <option value="Belagavi">Belagavi</option>
+                    <option value="Raurkela">Raurkela</option>
+                    <option value="Mangaluru">Mangaluru</option>
+                    <option value="Tirunelveli">Tirunelveli</option>
+                    <option value="Malegaon">Malegaon</option>
+                    <option value="Gaya">Gaya</option>
+                    <option value="Jalgaon">Jalgaon</option>
+                    <option value="Udaipur">Udaipur</option>
+                    <option value="Maheshtala">Maheshtala</option>
+                    <option value="Other">Other</option>
+                  </select>
                 </div>
               </div>
               {guestError && (
