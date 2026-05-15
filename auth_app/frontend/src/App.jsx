@@ -5,63 +5,125 @@ const API_BASE = import.meta.env.VITE_API_BASE || '/api';
 
 /* ─── Attribute labels ──────────────────────── */
 const ATTR_LABELS = {
-  relationship_type:    'Relationship',
-  parties_involved:     'Parties',
-  issue_types:          'Issue Type',
-  timeline_duration:    'Timeline',
-  living_situation:     'Living Situation',
+  relationship_type: 'Relationship',
+  parties_involved: 'Parties',
+  issue_types: 'Issue Type',
+  timeline_duration: 'Timeline',
+  living_situation: 'Living Situation',
   financial_dependency: 'Financial',
-  children_involved:    'Children',
-  prior_complaints:     'Prior Complaints',
-  evidence_available:   'Evidence',
-  relief_sought:        'Relief Sought',
+  children_involved: 'Children',
+  prior_complaints: 'Prior Complaints',
+  evidence_available: 'Evidence',
+  relief_sought: 'Relief Sought',
 };
 
 const PILL_CLS = {
-  'Victim Case Summary':           'pill-summary',
-  'Predicted Legal Outcomes':      'pill-outcomes',
+  'Victim Case Summary': 'pill-summary',
+  'Predicted Legal Outcomes': 'pill-outcomes',
   'Expected Duration of the Case': 'pill-duration',
-  'Decision Recommendation':       'pill-recommend',
-  'Reason for Recommendation':     'pill-reason',
-  'Recommended Next Actions':      'pill-actions',
+  'Decision Recommendation': 'pill-recommend',
+  'Reason for Recommendation': 'pill-reason',
+  'Recommended Next Actions': 'pill-actions',
 };
 const SECTION_ICONS = {
-  'Victim Case Summary':           'SUM',
-  'Predicted Legal Outcomes':      'OUT',
+  'Victim Case Summary': 'SUM',
+  'Predicted Legal Outcomes': 'OUT',
   'Expected Duration of the Case': 'DUR',
-  'Decision Recommendation':       'REC',
-  'Reason for Recommendation':     'WHY',
-  'Recommended Next Actions':      'ACT',
+  'Decision Recommendation': 'REC',
+  'Reason for Recommendation': 'WHY',
+  'Recommended Next Actions': 'ACT',
 };
 
 /* ─── SVG Icon Components ───────────────── */
 const IconExternal = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
-    <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+    <polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" />
   </svg>
 );
 const IconDoc = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-    <polyline points="14 2 14 8 20 8"/>
+    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+    <polyline points="14 2 14 8 20 8" />
   </svg>
 );
 const IconScale = () => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="12" y1="3" x2="12" y2="21"/>
-    <path d="M3 9l9-7 9 7-9-7-9 7"/>
-    <path d="M6 18h12"/>
-    <polyline points="3 9 9 15 15 9"/>
-    <polyline points="9 9 15 15 21 9"/>
+    <line x1="12" y1="3" x2="12" y2="21" />
+    <path d="M3 9l9-7 9 7-9-7-9 7" />
+    <path d="M6 18h12" />
+    <polyline points="3 9 9 15 15 9" />
+    <polyline points="9 9 15 15 21 9" />
   </svg>
 );
 const IconArrow = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <line x1="5" y1="12" x2="19" y2="12"/>
-    <polyline points="12 5 19 12 12 19"/>
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
   </svg>
 );
+const IconChevron = ({ open }) => (
+  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'transform 0.2s', transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+    <polyline points="6 9 12 15 18 9" />
+  </svg>
+);
+
+/* Inline collapsible source/reference toggle inside analysis sections */
+function SourceToggle({ label, children }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{ marginTop: 10 }}>
+      <button
+        onClick={() => setOpen(p => !p)}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 6,
+          background: open ? 'var(--tag-blue)' : 'rgba(37,99,235,0.06)',
+          border: '1px solid rgba(37,99,235,0.18)', borderRadius: 8,
+          padding: '5px 12px', cursor: 'pointer',
+          fontSize: 11.5, fontWeight: 600, color: '#2563eb',
+          transition: 'all 0.15s',
+        }}
+      >
+        <IconChevron open={open} />
+        {label}
+      </button>
+      {open && (
+        <div style={{
+          marginTop: 8, padding: '10px 14px',
+          background: 'rgba(37,99,235,0.04)', border: '1px solid rgba(37,99,235,0.12)',
+          borderRadius: 10, fontSize: 12.5, lineHeight: 1.65, color: 'var(--text-mid)',
+        }}>
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* Reference case card for inline display */
+function RefCaseCard({ rc }) {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'flex-start', gap: 10,
+      padding: '8px 0', borderBottom: '1px solid rgba(0,0,0,0.05)',
+    }}>
+      <span style={{
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        width: 28, height: 28, borderRadius: 6, flexShrink: 0,
+        background: '#2563eb', fontSize: 8, fontWeight: 800, color: '#fff',
+      }}>REF</span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)' }}>{rc.case_type}</div>
+        <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 2 }}>
+          Duration: {rc.duration_text} &middot; Similarity: {(rc.similarity * 100).toFixed(0)}%
+        </div>
+        {rc.why_selected && (
+          <div style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 2, fontStyle: 'italic' }}>{rc.why_selected}</div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 /* Abbreviation badge used as act identifier in lists */
 function ActBadge({ abbr, color }) {
@@ -79,26 +141,26 @@ function ActBadge({ abbr, color }) {
 
 /* ─── Legal library (rich data + gov links, no emoji) ─── */
 const LEGAL_LIBRARY = [
-  { id:'pwdva',      abbr:'PWDVA',  color:'#2563eb', title:'Protection of Women from Domestic Violence Act, 2005',  sub:'PWDVA — Civil Remedy',           year:'2005',               sections:'37 Sections', tags:[{l:'Civil Law',c:'blue'},{l:'Applicable',c:'green'}],   desc:'Provides protection orders, residence orders, monetary relief and custody orders to victims of domestic violence including physical, verbal, emotional, economic and sexual abuse.', keySections:['§12 — Application to Magistrate','§18 — Protection Orders','§19 — Residence Orders','§20 — Monetary Relief','§21 — Custody Orders'], howToUse:'File application (Form I) under §12 before the Magistrate. A Domestic Violence Protection Officer (DVPO) can assist you file for free. Interim relief is grantable on the same day.', links:[{label:'Read Full Act — WCD Ministry',url:'https://wcd.nic.in/sites/default/files/wcd_domestic-violence.pdf'},{label:'NCW — File Complaint Online',url:'https://ncwapps.nic.in/frmComplaint.aspx'},{label:'One Stop Centre Scheme',url:'https://wcd.nic.in/schemes2014/one-stop-centre-scheme'}]},
-  { id:'ipc498a',    abbr:'498A',   color:'#dc2626', title:'IPC §498A / BNS §85 — Cruelty by Husband or Relatives',    sub:'Indian Penal Code / BNS 2023',   year:'1860 / 2023',        sections:'§498A',      tags:[{l:'Criminal Law',c:'red'},{l:'Cognizable',c:'amber'}],    desc:'Criminally punishes husband or relatives for cruelty — physical or mental — including harassment for dowry. Imprisonment up to 3 years and fine.', keySections:['§498A — Cruelty (IPC)','§85 — Cruelty (BNS 2023)','Cognizable: FIR without warrant','Non-bailable: No automatic bail'], howToUse:'File an FIR at the nearest police station. If police refuses, file a complaint before a Magistrate under §190 CrPC. The crime is non-bailable so accused can be arrested immediately.', links:[{label:'Read §498A — IndianKanoon',url:'https://indiankanoon.org/doc/538436/'},{label:'eCourts — Track your Case',url:'https://services.ecourts.gov.in/'},{label:'Bharatiya Nyaya Sanhita, BNS 2023',url:'https://www.indiacode.nic.in/handle/123456789/20062'}]},
-  { id:'crpc125',    abbr:'CrPC',   color:'#059669', title:'Section 125 CrPC — Maintenance of Wives & Children',         sub:'Code of Criminal Procedure',     year:'1973',               sections:'§125–128',  tags:[{l:'Maintenance',c:'green'},{l:'Fast Track',c:'blue'}],     desc:'Allows wife to claim monthly maintenance from husband if unable to maintain herself. Interim maintenance grantable within 60 days. No court fee required.', keySections:['§125 — Order for maintenance','§126 — Jurisdiction of court','§127 — Alteration in allowance','§128 — Enforcement by warrant'], howToUse:'File petition in Family Court or Magistrate court. Attach income proof of husband and your monthly expense details. Interim maintenance is typically granted within 60 days. Free legal aid is available at DLSA.', links:[{label:'Read §125 CrPC — IndianKanoon',url:'https://indiankanoon.org/doc/195908/'},{label:'NALSA — Free Legal Aid',url:'https://nalsa.gov.in/'},{label:'eCourts Family Court Locator',url:'https://districts.ecourts.gov.in/'}]},
-  { id:'dowry',      abbr:'DPA',    color:'#7c3aed', title:'Dowry Prohibition Act, 1961',                              sub:'Anti-Dowry Law',                 year:'1961',               sections:'§3,§4,§6',   tags:[{l:'Criminal Law',c:'red'},{l:'Anti-Dowry',c:'amber'}],     desc:'Makes giving or taking dowry a criminal offence. Minimum 5 years imprisonment and fine of Rs.15,000 or value of dowry. Covers demand before, at or after marriage.', keySections:['§3 — Penalty for giving or taking dowry','§4 — Penalty for demanding dowry','§6 — Return of dowry to woman','§8B — Dowry Prohibition Officers'], howToUse:'Register a complaint with the Dowry Prohibition Officer in your district collector office, or file an FIR at the nearest police station. NCW can also be approached directly.', links:[{label:'Read Full Act — IndianKanoon',url:'https://indiankanoon.org/doc/1007566/'},{label:'NCW — Complaint Portal',url:'https://ncwapps.nic.in/frmComplaint.aspx'},{label:'Ministry of Women & Child Dev',url:'https://wcd.nic.in/'}]},
-  { id:'succession', abbr:'HSA',    color:'#b45309', title:"Hindu Succession Act — Women's Inheritance Rights",         sub:'Property & Inheritance Law',     year:'1956 (amended 2005)', sections:'§6,§14',     tags:[{l:'Property',c:'amber'},{l:'Inheritance',c:'blue'}],       desc:"Grants daughters equal rights to ancestral property as sons (post 2005 amendment). Married daughters retain this right. Applicable to Hindu, Buddhist, Jain, Sikh families.", keySections:['§6 — Devolution of interest (amended 2005)','§14 — Property of female Hindu','§15 — General rules of succession','§16 — Order of succession'], howToUse:'File a civil suit in the District Court for partition or declaration of share in ancestral property. Also approach the Tahsildar or Revenue Officer for ancestral property mutation records.', links:[{label:'Read Full Act — India Code',url:'https://www.indiacode.nic.in/handle/123456789/2189'},{label:'Department of Justice',url:'https://doj.gov.in/'},{label:'NALSA — Legal Aid & Advice',url:'https://nalsa.gov.in/'}]},
-  { id:'custody',    abbr:'HMG',    color:'#0891b2', title:'Hindu Minority & Guardianship Act — Child Custody',        sub:'Family & Child Law',             year:'1956',               sections:'§6,§13',     tags:[{l:'Child Custody',c:'green'},{l:'Family Law',c:'blue'}],   desc:"Mother is natural guardian of children below 5 years. Courts always prioritize welfare of child. Father's rights are not absolute; child's welfare is the paramount consideration.", keySections:['§6 — Natural guardians of Hindu minor','§13 — Welfare of minor is paramount','§7 — Guardianship in matters of adoption','PWDVA §21 — Temporary Custody (emergency)'], howToUse:"File a Guardianship petition in the Family Court. For emergency custody, apply under PWDVA §26. Protection Officers can assist at no cost. Many states waive court fees for women petitioners.", links:[{label:'Read HMGA — IndianKanoon',url:'https://indiankanoon.org/doc/1099021/'},{label:'eCourts — Family Court Locator',url:'https://districts.ecourts.gov.in/'},{label:'WCD — Child & Women Welfare',url:'https://wcd.nic.in/'}]},
-  { id:'it',         abbr:'ITA',    color:'#dc2626', title:'Information Technology Act — Cyber Crimes Against Women',  sub:'IT Act 2000 / BNS 2023',         year:'2000',               sections:'§66E,§67',   tags:[{l:'Cyber Crime',c:'red'},{l:'Digital Safety',c:'blue'}],  desc:'Covers digital stalking, online harassment, morphing, non-consensual sharing of intimate images, cyberstalking, and sextortion. BNS 2023 adds stronger provisions.', keySections:['§66E — Violation of privacy (images)','§67 — Publication of obscene material','§67A — Sexually explicit material','BNS §77 — Stalking (digital or physical)','BNS §79 — Voyeurism'], howToUse:'Report online at the National Cyber Crime Reporting Portal (cybercrime.gov.in). Reports can be made anonymously. Also file FIR at the local Cyber Cell or nearest police station.', links:[{label:'National Cyber Crime Portal (Govt)',url:'https://cybercrime.gov.in/'},{label:'Read IT Act — India Code',url:'https://www.indiacode.nic.in/bitstream/123456789/1999/3/A2000-21.pdf'},{label:'NCW — Online Complaint',url:'https://ncwapps.nic.in/frmComplaint.aspx'}]},
-  { id:'posh',       abbr:'POSH',   color:'#2563eb', title:'POSH Act — Prevention of Sexual Harassment at Workplace',  sub:'POSH Act, 2013',                 year:'2013',               sections:'§2,§4,§9',   tags:[{l:'Workplace',c:'blue'},{l:'Sexual Harassment',c:'red'}], desc:'Every organization with 10+ employees must constitute an Internal Complaints Committee (ICC). Covers all forms of sexual harassment at workplace, on work trips, and in online work settings.', keySections:['§4 — Constitution of Internal Complaints Committee','§9 — Complaint filing (within 90 days)','§11 — Inquiry procedure of ICC','§13 — Recommended action after ICC report'], howToUse:"File complaint with your organization's ICC within 90 days. If no ICC exists, approach the Local Complaints Committee (LCC) at the District level. Register complaint on SHe-Box portal.", links:[{label:'SHe-Box — Official Govt Portal',url:'https://shebox.nic.in/'},{label:'Read POSH Act — IndianKanoon',url:'https://indiankanoon.org/doc/56539849/'},{label:'NCW — POSH Complaint',url:'https://ncwapps.nic.in/frmComplaint.aspx'}]},
-  { id:'crpa',       abbr:'CRPA',   color:'#0891b2', title:'Code of Criminal Procedure — Bail, FIR & Trial Rights',   sub:'CrPC 1973 / BNSS 2023',          year:'1973 / 2023',        sections:'§154,§437',  tags:[{l:'Procedure',c:'blue'},{l:'FIR & Bail',c:'amber'}],       desc:'Governs how FIRs are filed, bail is given or denied, trials are conducted, and how victims can approach courts directly. BNSS 2023 replaced CrPC with updated provisions.', keySections:['§154 — Information in cognizable offence (FIR)','§156(3) — Magistrate-ordered investigation','§437 — Bail in non-bailable offences','§439 — Special powers of Sessions Court for bail'], howToUse:'File FIR at nearest police station. If refused, approach Superintendent of Police (SP) or file private complaint before Magistrate under §156(3) or §200 CrPC.', links:[{label:'Read CrPC — IndianKanoon',url:'https://indiankanoon.org/doc/1308537/'},{label:'eCourts Case Status Portal',url:'https://services.ecourts.gov.in/'},{label:'BNSS 2023 — India Code',url:'https://www.indiacode.nic.in/handle/123456789/20062'}]},
-  { id:'ioa',        abbr:'HPS',    color:'#059669', title:'Hindu Marriage Act — Divorce, Alimony & Restitution',      sub:'Hindu Personal & Family Law',    year:'1955',               sections:'§13,§24,§25', tags:[{l:'Divorce',c:'amber'},{l:'Alimony',c:'green'}],           desc:'Governs Hindu marriage, grounds for divorce, interim alimony during proceedings, permanent alimony after divorce, and restitution of conjugal rights.', keySections:['§13 — Grounds for divorce','§13B — Divorce by mutual consent','§24 — Maintenance pendente lite (during case)','§25 — Permanent alimony and maintenance'], howToUse:'File a petition for divorce in the Family Court of the district where you last resided together. You can apply for interim maintenance under §24 immediately after filing.', links:[{label:'Read Hindu Marriage Act — IndianKanoon',url:'https://indiankanoon.org/doc/550624/'},{label:'eCourts — Family Court Locator',url:'https://districts.ecourts.gov.in/'},{label:'NALSA — Free Legal Aid',url:'https://nalsa.gov.in/'}]},
+  { id: 'pwdva', abbr: 'PWDVA', color: '#2563eb', title: 'Protection of Women from Domestic Violence Act, 2005', sub: 'PWDVA — Civil Remedy', year: '2005', sections: '37 Sections', tags: [{ l: 'Civil Law', c: 'blue' }, { l: 'Applicable', c: 'green' }], desc: 'Provides protection orders, residence orders, monetary relief and custody orders to victims of domestic violence including physical, verbal, emotional, economic and sexual abuse.', keySections: ['§12 — Application to Magistrate', '§18 — Protection Orders', '§19 — Residence Orders', '§20 — Monetary Relief', '§21 — Custody Orders'], howToUse: 'File application (Form I) under §12 before the Magistrate. A Domestic Violence Protection Officer (DVPO) can assist you file for free. Interim relief is grantable on the same day.', links: [{ label: 'Read Full Act — WCD Ministry', url: 'https://wcd.nic.in/sites/default/files/wcd_domestic-violence.pdf' }, { label: 'NCW — File Complaint Online', url: 'https://ncwapps.nic.in/frmComplaint.aspx' }, { label: 'One Stop Centre Scheme', url: 'https://wcd.nic.in/schemes2014/one-stop-centre-scheme' }] },
+  { id: 'ipc498a', abbr: '498A', color: '#dc2626', title: 'IPC §498A / BNS §85 — Cruelty by Husband or Relatives', sub: 'Indian Penal Code / BNS 2023', year: '1860 / 2023', sections: '§498A', tags: [{ l: 'Criminal Law', c: 'red' }, { l: 'Cognizable', c: 'amber' }], desc: 'Criminally punishes husband or relatives for cruelty — physical or mental — including harassment for dowry. Imprisonment up to 3 years and fine.', keySections: ['§498A — Cruelty (IPC)', '§85 — Cruelty (BNS 2023)', 'Cognizable: FIR without warrant', 'Non-bailable: No automatic bail'], howToUse: 'File an FIR at the nearest police station. If police refuses, file a complaint before a Magistrate under §190 CrPC. The crime is non-bailable so accused can be arrested immediately.', links: [{ label: 'Read §498A — IndianKanoon', url: 'https://indiankanoon.org/doc/538436/' }, { label: 'eCourts — Track your Case', url: 'https://services.ecourts.gov.in/' }, { label: 'Bharatiya Nyaya Sanhita, BNS 2023', url: 'https://www.indiacode.nic.in/handle/123456789/20062' }] },
+  { id: 'crpc125', abbr: 'CrPC', color: '#059669', title: 'Section 125 CrPC — Maintenance of Wives & Children', sub: 'Code of Criminal Procedure', year: '1973', sections: '§125–128', tags: [{ l: 'Maintenance', c: 'green' }, { l: 'Fast Track', c: 'blue' }], desc: 'Allows wife to claim monthly maintenance from husband if unable to maintain herself. Interim maintenance grantable within 60 days. No court fee required.', keySections: ['§125 — Order for maintenance', '§126 — Jurisdiction of court', '§127 — Alteration in allowance', '§128 — Enforcement by warrant'], howToUse: 'File petition in Family Court or Magistrate court. Attach income proof of husband and your monthly expense details. Interim maintenance is typically granted within 60 days. Free legal aid is available at DLSA.', links: [{ label: 'Read §125 CrPC — IndianKanoon', url: 'https://indiankanoon.org/doc/195908/' }, { label: 'NALSA — Free Legal Aid', url: 'https://nalsa.gov.in/' }, { label: 'eCourts Family Court Locator', url: 'https://districts.ecourts.gov.in/' }] },
+  { id: 'dowry', abbr: 'DPA', color: '#7c3aed', title: 'Dowry Prohibition Act, 1961', sub: 'Anti-Dowry Law', year: '1961', sections: '§3,§4,§6', tags: [{ l: 'Criminal Law', c: 'red' }, { l: 'Anti-Dowry', c: 'amber' }], desc: 'Makes giving or taking dowry a criminal offence. Minimum 5 years imprisonment and fine of Rs.15,000 or value of dowry. Covers demand before, at or after marriage.', keySections: ['§3 — Penalty for giving or taking dowry', '§4 — Penalty for demanding dowry', '§6 — Return of dowry to woman', '§8B — Dowry Prohibition Officers'], howToUse: 'Register a complaint with the Dowry Prohibition Officer in your district collector office, or file an FIR at the nearest police station. NCW can also be approached directly.', links: [{ label: 'Read Full Act — IndianKanoon', url: 'https://indiankanoon.org/doc/1007566/' }, { label: 'NCW — Complaint Portal', url: 'https://ncwapps.nic.in/frmComplaint.aspx' }, { label: 'Ministry of Women & Child Dev', url: 'https://wcd.nic.in/' }] },
+  { id: 'succession', abbr: 'HSA', color: '#b45309', title: "Hindu Succession Act — Women's Inheritance Rights", sub: 'Property & Inheritance Law', year: '1956 (amended 2005)', sections: '§6,§14', tags: [{ l: 'Property', c: 'amber' }, { l: 'Inheritance', c: 'blue' }], desc: "Grants daughters equal rights to ancestral property as sons (post 2005 amendment). Married daughters retain this right. Applicable to Hindu, Buddhist, Jain, Sikh families.", keySections: ['§6 — Devolution of interest (amended 2005)', '§14 — Property of female Hindu', '§15 — General rules of succession', '§16 — Order of succession'], howToUse: 'File a civil suit in the District Court for partition or declaration of share in ancestral property. Also approach the Tahsildar or Revenue Officer for ancestral property mutation records.', links: [{ label: 'Read Full Act — India Code', url: 'https://www.indiacode.nic.in/handle/123456789/2189' }, { label: 'Department of Justice', url: 'https://doj.gov.in/' }, { label: 'NALSA — Legal Aid & Advice', url: 'https://nalsa.gov.in/' }] },
+  { id: 'custody', abbr: 'HMG', color: '#0891b2', title: 'Hindu Minority & Guardianship Act — Child Custody', sub: 'Family & Child Law', year: '1956', sections: '§6,§13', tags: [{ l: 'Child Custody', c: 'green' }, { l: 'Family Law', c: 'blue' }], desc: "Mother is natural guardian of children below 5 years. Courts always prioritize welfare of child. Father's rights are not absolute; child's welfare is the paramount consideration.", keySections: ['§6 — Natural guardians of Hindu minor', '§13 — Welfare of minor is paramount', '§7 — Guardianship in matters of adoption', 'PWDVA §21 — Temporary Custody (emergency)'], howToUse: "File a Guardianship petition in the Family Court. For emergency custody, apply under PWDVA §26. Protection Officers can assist at no cost. Many states waive court fees for women petitioners.", links: [{ label: 'Read HMGA — IndianKanoon', url: 'https://indiankanoon.org/doc/1099021/' }, { label: 'eCourts — Family Court Locator', url: 'https://districts.ecourts.gov.in/' }, { label: 'WCD — Child & Women Welfare', url: 'https://wcd.nic.in/' }] },
+  { id: 'it', abbr: 'ITA', color: '#dc2626', title: 'Information Technology Act — Cyber Crimes Against Women', sub: 'IT Act 2000 / BNS 2023', year: '2000', sections: '§66E,§67', tags: [{ l: 'Cyber Crime', c: 'red' }, { l: 'Digital Safety', c: 'blue' }], desc: 'Covers digital stalking, online harassment, morphing, non-consensual sharing of intimate images, cyberstalking, and sextortion. BNS 2023 adds stronger provisions.', keySections: ['§66E — Violation of privacy (images)', '§67 — Publication of obscene material', '§67A — Sexually explicit material', 'BNS §77 — Stalking (digital or physical)', 'BNS §79 — Voyeurism'], howToUse: 'Report online at the National Cyber Crime Reporting Portal (cybercrime.gov.in). Reports can be made anonymously. Also file FIR at the local Cyber Cell or nearest police station.', links: [{ label: 'National Cyber Crime Portal (Govt)', url: 'https://cybercrime.gov.in/' }, { label: 'Read IT Act — India Code', url: 'https://www.indiacode.nic.in/bitstream/123456789/1999/3/A2000-21.pdf' }, { label: 'NCW — Online Complaint', url: 'https://ncwapps.nic.in/frmComplaint.aspx' }] },
+  { id: 'posh', abbr: 'POSH', color: '#2563eb', title: 'POSH Act — Prevention of Sexual Harassment at Workplace', sub: 'POSH Act, 2013', year: '2013', sections: '§2,§4,§9', tags: [{ l: 'Workplace', c: 'blue' }, { l: 'Sexual Harassment', c: 'red' }], desc: 'Every organization with 10+ employees must constitute an Internal Complaints Committee (ICC). Covers all forms of sexual harassment at workplace, on work trips, and in online work settings.', keySections: ['§4 — Constitution of Internal Complaints Committee', '§9 — Complaint filing (within 90 days)', '§11 — Inquiry procedure of ICC', '§13 — Recommended action after ICC report'], howToUse: "File complaint with your organization's ICC within 90 days. If no ICC exists, approach the Local Complaints Committee (LCC) at the District level. Register complaint on SHe-Box portal.", links: [{ label: 'SHe-Box — Official Govt Portal', url: 'https://shebox.nic.in/' }, { label: 'Read POSH Act — IndianKanoon', url: 'https://indiankanoon.org/doc/56539849/' }, { label: 'NCW — POSH Complaint', url: 'https://ncwapps.nic.in/frmComplaint.aspx' }] },
+  { id: 'crpa', abbr: 'CRPA', color: '#0891b2', title: 'Code of Criminal Procedure — Bail, FIR & Trial Rights', sub: 'CrPC 1973 / BNSS 2023', year: '1973 / 2023', sections: '§154,§437', tags: [{ l: 'Procedure', c: 'blue' }, { l: 'FIR & Bail', c: 'amber' }], desc: 'Governs how FIRs are filed, bail is given or denied, trials are conducted, and how victims can approach courts directly. BNSS 2023 replaced CrPC with updated provisions.', keySections: ['§154 — Information in cognizable offence (FIR)', '§156(3) — Magistrate-ordered investigation', '§437 — Bail in non-bailable offences', '§439 — Special powers of Sessions Court for bail'], howToUse: 'File FIR at nearest police station. If refused, approach Superintendent of Police (SP) or file private complaint before Magistrate under §156(3) or §200 CrPC.', links: [{ label: 'Read CrPC — IndianKanoon', url: 'https://indiankanoon.org/doc/1308537/' }, { label: 'eCourts Case Status Portal', url: 'https://services.ecourts.gov.in/' }, { label: 'BNSS 2023 — India Code', url: 'https://www.indiacode.nic.in/handle/123456789/20062' }] },
+  { id: 'ioa', abbr: 'HPS', color: '#059669', title: 'Hindu Marriage Act — Divorce, Alimony & Restitution', sub: 'Hindu Personal & Family Law', year: '1955', sections: '§13,§24,§25', tags: [{ l: 'Divorce', c: 'amber' }, { l: 'Alimony', c: 'green' }], desc: 'Governs Hindu marriage, grounds for divorce, interim alimony during proceedings, permanent alimony after divorce, and restitution of conjugal rights.', keySections: ['§13 — Grounds for divorce', '§13B — Divorce by mutual consent', '§24 — Maintenance pendente lite (during case)', '§25 — Permanent alimony and maintenance'], howToUse: 'File a petition for divorce in the Family Court of the district where you last resided together. You can apply for interim maintenance under §24 immediately after filing.', links: [{ label: 'Read Hindu Marriage Act — IndianKanoon', url: 'https://indiankanoon.org/doc/550624/' }, { label: 'eCourts — Family Court Locator', url: 'https://districts.ecourts.gov.in/' }, { label: 'NALSA — Free Legal Aid', url: 'https://nalsa.gov.in/' }] },
 ];
 
 /* ─── My Documents (no emoji icons) ───────────── */
 const MY_DOCUMENTS = [
-  { id:'intake',      abbr:'AI',    color:'#2563eb', title:'Case Intake Summary',                    meta:'AI Generated · Today',           tags:[{l:'AI Generated',c:'blue'},{l:'Current Case',c:'green'}],  desc:'AI-generated summary of your case including key facts, timeline, parties involved, and identified legal issues.', content:'This document is auto-generated after your NyayaSakhi consultation. Start a conversation to build your case intake summary with all collected facts.', links:[{label:'NCW — Online Legal Consultation',url:'https://ncwapps.nic.in/frmComplaint.aspx'},{label:'NALSA — Free Legal Aid',url:'https://nalsa.gov.in/'},{label:'Legal Services India',url:'http://www.legalservicesindia.com/'}]},
-  { id:'laws',        abbr:'LAW',   color:'#7c3aed', title:'Applicable Laws Report',                 meta:'AI Generated · Today',           tags:[{l:'Legal Analysis',c:'blue'},{l:'10 Acts',c:'amber'}],      desc:'List of Indian laws, IPC sections and court precedents applicable to your specific situation based on the facts you shared.', content:'Complete a consultation first. Based on your case, NyayaSakhi identifies relevant Indian acts, key sections, and applicable precedents from eCourts judgements.', links:[{label:'IndianKanoon — Case Law Search',url:'https://indiankanoon.org/'},{label:'India Code — Official Legislation',url:'https://www.indiacode.nic.in/'},{label:'Department of Justice, India',url:'https://doj.gov.in/'}]},
-  { id:'protection',  abbr:'FORM',  color:'#059669', title:'Protection Order Application — Form I',  meta:'Template · PWDVA 2005',          tags:[{l:'Downloadable',c:'green'},{l:'PWDVA',c:'blue'}],          desc:'Official Form I for applying for a Protection Order before the Magistrate under Protection of Women from Domestic Violence Act 2005.', content:'Form I is filed under Section 12 of PWDVA 2005 to seek Protection Order, Residence Order, and Monetary Relief. Part A: Your details. Part B: Respondent details. Submit through a Protection Officer or directly at the Magistrate court.', links:[{label:'Download Form I — WCD Ministry (PDF)',url:'https://wcd.nic.in/sites/default/files/wcd_domestic-violence.pdf'},{label:'eCourts — Locate Magistrate Court',url:'https://districts.ecourts.gov.in/'},{label:'WCD — Protection Officers Directory',url:'https://wcd.nic.in/'}]},
-  { id:'checklist',   abbr:'LIST',  color:'#b45309', title:'Evidence Checklist',                       meta:'Template · Best Practices',      tags:[{l:'Checklist',c:'amber'},{l:'Evidence',c:'red'}],           desc:'Checklist of evidence types to gather — medical reports, messages, photographs, witnesses, financial records.', content:'Strong evidence significantly improves your case. Collect: (1) Medical injury reports from government hospital (2) Screenshot and backup of abusive messages (3) Photographs of injuries or damaged property (4) Witness names and contact numbers (5) Bank statements showing financial control (6) Audio or video recordings where legal (7) Documents showing husband income and property.', links:[{label:'National Cyber Crime Portal — Evidence',url:'https://cybercrime.gov.in/'},{label:'NALSA — Legal Aid Authority',url:'https://nalsa.gov.in/'},{label:'NCW — Women Helpline Support',url:'https://ncw.nic.in/'}]},
-  { id:'maintenance', abbr:'CrPC',  color:'#0891b2', title:'Maintenance Claim Guide — Section 125 CrPC', meta:'Guide · Legal Process',          tags:[{l:'Step-by-Step',c:'green'},{l:'Maintenance',c:'blue'}],   desc:'Step-by-step guide to filing a maintenance application in Magistrate court including forms, procedure, and timelines.', content:'Step 1: File petition in Family Court or Magistrate court using Form II. Step 2: Attach income proof of husband (salary slip, ITR, bank statement). Step 3: Submit your monthly expense statement. Step 4: Court may grant interim maintenance within 60 days of filing. Step 5: Final maintenance order is passed after full hearing. No court fees are required. Free legal aid is available at your District Legal Services Authority (DLSA).', links:[{label:'NALSA — Free Legal Aid Authority',url:'https://nalsa.gov.in/'},{label:'District Legal Services Locator',url:'https://nalsa.gov.in/lsams/'},{label:'Read Section 125 CrPC — IndianKanoon',url:'https://indiankanoon.org/doc/195908/'}]},
-  { id:'helplines',   abbr:'HELP',  color:'#dc2626', title:'Emergency Helplines & Contacts',           meta:'Resource · Always Updated',      tags:[{l:'Emergency',c:'red'},{l:'Helplines',c:'amber'}],          desc:'National and state-wise women helplines, legal aid contacts, shelter homes, and specialist police contacts.', content:'EMERGENCY CONTACTS:\n\nWomen Helpline: 181\nNational Emergency (Police / Fire / Medical): 112\nNCW Helpline: 7827170170\nNational Cyber Crime (Online): 1930\nChild Helpline: 1098\niCall Mental Health (TISS): 9152987821\nVanitha Helpline (South India): 1091\n\nALL calls to 181 are FREE, 24x7, and available in all states.', links:[{label:'NCW — National Commission for Women',url:'https://ncw.nic.in/'},{label:'One Stop Centre — WCD Ministry',url:'https://wcd.nic.in/schemes2014/one-stop-centre-scheme'},{label:'NALSA — Legal Aid Locator',url:'https://nalsa.gov.in/'}]},
+  { id: 'intake', abbr: 'AI', color: '#2563eb', title: 'Case Intake Summary', meta: 'AI Generated · Today', tags: [{ l: 'AI Generated', c: 'blue' }, { l: 'Current Case', c: 'green' }], desc: 'AI-generated summary of your case including key facts, timeline, parties involved, and identified legal issues.', content: 'This document is auto-generated after your NyayaSakhi consultation. Start a conversation to build your case intake summary with all collected facts.', links: [{ label: 'NCW — Online Legal Consultation', url: 'https://ncwapps.nic.in/frmComplaint.aspx' }, { label: 'NALSA — Free Legal Aid', url: 'https://nalsa.gov.in/' }, { label: 'Legal Services India', url: 'http://www.legalservicesindia.com/' }] },
+  { id: 'laws', abbr: 'LAW', color: '#7c3aed', title: 'Applicable Laws Report', meta: 'AI Generated · Today', tags: [{ l: 'Legal Analysis', c: 'blue' }, { l: '10 Acts', c: 'amber' }], desc: 'List of Indian laws, IPC sections and court precedents applicable to your specific situation based on the facts you shared.', content: 'Complete a consultation first. Based on your case, NyayaSakhi identifies relevant Indian acts, key sections, and applicable precedents from eCourts judgements.', links: [{ label: 'IndianKanoon — Case Law Search', url: 'https://indiankanoon.org/' }, { label: 'India Code — Official Legislation', url: 'https://www.indiacode.nic.in/' }, { label: 'Department of Justice, India', url: 'https://doj.gov.in/' }] },
+  { id: 'protection', abbr: 'FORM', color: '#059669', title: 'Protection Order Application — Form I', meta: 'Template · PWDVA 2005', tags: [{ l: 'Downloadable', c: 'green' }, { l: 'PWDVA', c: 'blue' }], desc: 'Official Form I for applying for a Protection Order before the Magistrate under Protection of Women from Domestic Violence Act 2005.', content: 'Form I is filed under Section 12 of PWDVA 2005 to seek Protection Order, Residence Order, and Monetary Relief. Part A: Your details. Part B: Respondent details. Submit through a Protection Officer or directly at the Magistrate court.', links: [{ label: 'Download Form I — WCD Ministry (PDF)', url: 'https://wcd.nic.in/sites/default/files/wcd_domestic-violence.pdf' }, { label: 'eCourts — Locate Magistrate Court', url: 'https://districts.ecourts.gov.in/' }, { label: 'WCD — Protection Officers Directory', url: 'https://wcd.nic.in/' }] },
+  { id: 'checklist', abbr: 'LIST', color: '#b45309', title: 'Evidence Checklist', meta: 'Template · Best Practices', tags: [{ l: 'Checklist', c: 'amber' }, { l: 'Evidence', c: 'red' }], desc: 'Checklist of evidence types to gather — medical reports, messages, photographs, witnesses, financial records.', content: 'Strong evidence significantly improves your case. Collect: (1) Medical injury reports from government hospital (2) Screenshot and backup of abusive messages (3) Photographs of injuries or damaged property (4) Witness names and contact numbers (5) Bank statements showing financial control (6) Audio or video recordings where legal (7) Documents showing husband income and property.', links: [{ label: 'National Cyber Crime Portal — Evidence', url: 'https://cybercrime.gov.in/' }, { label: 'NALSA — Legal Aid Authority', url: 'https://nalsa.gov.in/' }, { label: 'NCW — Women Helpline Support', url: 'https://ncw.nic.in/' }] },
+  { id: 'maintenance', abbr: 'CrPC', color: '#0891b2', title: 'Maintenance Claim Guide — Section 125 CrPC', meta: 'Guide · Legal Process', tags: [{ l: 'Step-by-Step', c: 'green' }, { l: 'Maintenance', c: 'blue' }], desc: 'Step-by-step guide to filing a maintenance application in Magistrate court including forms, procedure, and timelines.', content: 'Step 1: File petition in Family Court or Magistrate court using Form II. Step 2: Attach income proof of husband (salary slip, ITR, bank statement). Step 3: Submit your monthly expense statement. Step 4: Court may grant interim maintenance within 60 days of filing. Step 5: Final maintenance order is passed after full hearing. No court fees are required. Free legal aid is available at your District Legal Services Authority (DLSA).', links: [{ label: 'NALSA — Free Legal Aid Authority', url: 'https://nalsa.gov.in/' }, { label: 'District Legal Services Locator', url: 'https://nalsa.gov.in/lsams/' }, { label: 'Read Section 125 CrPC — IndianKanoon', url: 'https://indiankanoon.org/doc/195908/' }] },
+  { id: 'helplines', abbr: 'HELP', color: '#dc2626', title: 'Emergency Helplines & Contacts', meta: 'Resource · Always Updated', tags: [{ l: 'Emergency', c: 'red' }, { l: 'Helplines', c: 'amber' }], desc: 'National and state-wise women helplines, legal aid contacts, shelter homes, and specialist police contacts.', content: 'EMERGENCY CONTACTS:\n\nWomen Helpline: 181\nNational Emergency (Police / Fire / Medical): 112\nNCW Helpline: 7827170170\nNational Cyber Crime (Online): 1930\nChild Helpline: 1098\niCall Mental Health (TISS): 9152987821\nVanitha Helpline (South India): 1091\n\nALL calls to 181 are FREE, 24x7, and available in all states.', links: [{ label: 'NCW — National Commission for Women', url: 'https://ncw.nic.in/' }, { label: 'One Stop Centre — WCD Ministry', url: 'https://wcd.nic.in/schemes2014/one-stop-centre-scheme' }, { label: 'NALSA — Legal Aid Locator', url: 'https://nalsa.gov.in/' }] },
 ];
 
 /* ─── Build action tags from analysis ────────── */
@@ -106,12 +168,12 @@ function buildActionTags(fr) {
   if (!fr) return [];
   const tags = [];
   const t = Object.values(fr).join(' ');
-  if (/protection order|PWDVA/i.test(t))     tags.push({ label: 'Protection Order Available', cls: 'tag-green' });
-  if (/maintenance|alimony|125/i.test(t))    tags.push({ label: 'Maintenance Claim', cls: 'tag-blue' });
+  if (/protection order|PWDVA/i.test(t)) tags.push({ label: 'Protection Order Available', cls: 'tag-green' });
+  if (/maintenance|alimony|125/i.test(t)) tags.push({ label: 'Maintenance Claim', cls: 'tag-blue' });
   if (/evidence.*weak|no evidence/i.test(t)) tags.push({ label: 'Evidence Gaps Found', cls: 'tag-red' });
-  if (/498A|FIR|criminal/i.test(t))          tags.push({ label: 'Criminal FIR Possible', cls: 'tag-amber' });
-  if (/urgent|immediate/i.test(t))           tags.push({ label: 'Seek Urgent Help', cls: 'tag-red' });
-  if (/residence order/i.test(t))            tags.push({ label: 'Residence Order', cls: 'tag-blue' });
+  if (/498A|FIR|criminal/i.test(t)) tags.push({ label: 'Criminal FIR Possible', cls: 'tag-amber' });
+  if (/urgent|immediate/i.test(t)) tags.push({ label: 'Seek Urgent Help', cls: 'tag-red' });
+  if (/residence order/i.test(t)) tags.push({ label: 'Residence Order', cls: 'tag-blue' });
   if (tags.length === 0) tags.push({ label: 'Legal Options Available', cls: 'tag-green' });
   return tags;
 }
@@ -124,15 +186,15 @@ function buildAccordionSections(fr) {
 
   // Legal issues (amber)
   const issues = [];
-  if (/PWDVA|domestic violence/i.test(text))   issues.push({ title: 'PWDVA 2005 — Protection Order', body: 'You may be entitled to a Protection Order, Residence Order, and/or Monetary Relief under the PWDVA 2005. This is a strong civil remedy with fast redressal.', type: 'issue' });
-  if (/498A|cruelty/i.test(text))              issues.push({ title: 'IPC §498A — Cruelty', body: 'The conduct described may constitute cruelty under IPC §498A / BNS §85. This is a cognizable and non-bailable offence.', type: 'issue' });
-  if (/maintenance/i.test(text))               issues.push({ title: '§125 CrPC — Maintenance Right', body: 'You may claim monthly maintenance under §125 CrPC. No maximum limit — courts decide based on husband\'s income and lifestyle.', type: 'issue' });
+  if (/PWDVA|domestic violence/i.test(text)) issues.push({ title: 'PWDVA 2005 — Protection Order', body: 'You may be entitled to a Protection Order, Residence Order, and/or Monetary Relief under the PWDVA 2005. This is a strong civil remedy with fast redressal.', type: 'issue' });
+  if (/498A|cruelty/i.test(text)) issues.push({ title: 'IPC §498A — Cruelty', body: 'The conduct described may constitute cruelty under IPC §498A / BNS §85. This is a cognizable and non-bailable offence.', type: 'issue' });
+  if (/maintenance/i.test(text)) issues.push({ title: '§125 CrPC — Maintenance Right', body: 'You may claim monthly maintenance under §125 CrPC. No maximum limit — courts decide based on husband\'s income and lifestyle.', type: 'issue' });
   if (issues.length) sections.push({ label: `Legal Issues Found: ${issues.length}`, countCls: 'issues', cards: issues });
 
   // Evidence gaps (red)
   const gaps = [];
   if (/no evidence|no witness|no medical/i.test(text)) gaps.push({ title: 'Insufficient Evidence', body: 'The case mentions limited evidence. Strengthen your case by collecting WhatsApp messages, photographs, medical reports, and witness statements.', type: 'gap' });
-  if (/contested|oppose|reject/i.test(text))  gaps.push({ title: 'Contested Outcome Risk', body: 'The opposite party may contest aggressively. Document all incidents with dates, times, and details. Keep records of all communications.', type: 'gap' });
+  if (/contested|oppose|reject/i.test(text)) gaps.push({ title: 'Contested Outcome Risk', body: 'The opposite party may contest aggressively. Document all incidents with dates, times, and details. Keep records of all communications.', type: 'gap' });
   if (gaps.length) sections.push({ label: `Evidence Gaps: ${gaps.length}`, countCls: 'gaps', cards: gaps });
 
   // Legal sources (blue)
@@ -163,15 +225,15 @@ function buildCitations(fr) {
 function md(text) {
   if (!text) return '';
   let h = text
-    .replace(/^### (.+)$/gm,   '<h3>$1</h3>')
-    .replace(/^## (.+)$/gm,    '<h3>$1</h3>')
+    .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+    .replace(/^## (.+)$/gm, '<h3>$1</h3>')
     .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.+?)\*/g,     '<em>$1</em>')
-    .replace(/^[-•]\s+(.+)$/gm,'<li>$1</li>')
-    .replace(/^\d+\.\s+(.+)$/gm,'<li>$1</li>')
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    .replace(/^[-•]\s+(.+)$/gm, '<li>$1</li>')
+    .replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>')
     .replace(/\n\n/g, '</p><p>')
-    .replace(/\n/g,   '<br />');
-  h = h.replace(/(<li>.*?<\/li>(?:\s*<br \/>)*)+/gs, m => `<ul>${m.replace(/<br \/>/g,'')}</ul>`);
+    .replace(/\n/g, '<br />');
+  h = h.replace(/(<li>.*?<\/li>(?:\s*<br \/>)*)+/gs, m => `<ul>${m.replace(/<br \/>/g, '')}</ul>`);
   return `<p>${h}</p>`;
 }
 
@@ -205,18 +267,96 @@ function AccSection({ section }) {
 }
 
 /* ─── My Documents tab ── Two-panel layout ────── */
-function MyDocumentsTab({ switchToLibrary }) {
-  const [selected, setSelected] = useState(MY_DOCUMENTS[0]);
+function MyDocumentsTab({ switchToLibrary, messages, caseSummaryId }) {
+  // Build dynamic documents from analysis
+  const finalMsg = [...messages].reverse().find(m => m.isFinal && m.finalResponse);
+  const fr = finalMsg?.finalResponse || null;
+  const dp = finalMsg?.durationPrediction || null;
+
+  function downloadDoc(title, content) {
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${title.replace(/[^a-zA-Z0-9]/g, '_')}_${new Date().toISOString().slice(0,10)}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // Generate dynamic docs if analysis exists
+  const dynamicDocs = [];
+  if (fr) {
+    dynamicDocs.push({
+      id: 'case-summary', abbr: 'AI', color: '#2563eb',
+      title: 'Case Intake Summary',
+      meta: `AI Generated · ${new Date().toLocaleDateString()}${caseSummaryId ? ` · ${caseSummaryId}` : ''}`,
+      tags: [{ l: 'AI Generated', c: 'blue' }, { l: 'Current Case', c: 'green' }],
+      desc: 'Complete AI-generated summary of your case with all collected facts, timeline, and parties.',
+      content: fr['Victim Case Summary'] || 'No summary available.',
+      downloadable: true,
+      fullText: `CASE INTAKE SUMMARY\n${caseSummaryId ? `Case ID: ${caseSummaryId}\n` : ''}Date: ${new Date().toLocaleDateString()}\n\n${fr['Victim Case Summary'] || ''}`,
+      links: MY_DOCUMENTS[0].links,
+    });
+    dynamicDocs.push({
+      id: 'legal-outcomes', abbr: 'OUT', color: '#059669',
+      title: 'Predicted Legal Outcomes',
+      meta: `AI Generated · ${new Date().toLocaleDateString()}`,
+      tags: [{ l: 'Prediction', c: 'green' }, { l: 'Court Outcome', c: 'blue' }],
+      desc: 'AI-predicted court outcomes including maintenance calculation, protection orders, and criminal prosecution likelihood.',
+      content: fr['Predicted Legal Outcomes'] || 'No predictions available.',
+      downloadable: true,
+      fullText: `PREDICTED LEGAL OUTCOMES\nDate: ${new Date().toLocaleDateString()}\n\n${fr['Predicted Legal Outcomes'] || ''}`,
+      links: MY_DOCUMENTS[1].links,
+    });
+    dynamicDocs.push({
+      id: 'duration', abbr: 'TIME', color: '#7c3aed',
+      title: 'Case Duration Prediction',
+      meta: `AI Generated · ${new Date().toLocaleDateString()}`,
+      tags: [{ l: 'Duration', c: 'blue' }, { l: 'Timeline', c: 'amber' }],
+      desc: 'Predicted timeline for your case based on similar court cases, complexity, and evidence strength.',
+      content: fr['Expected Duration of the Case'] || 'No duration prediction available.',
+      downloadable: true,
+      fullText: `CASE DURATION PREDICTION\nDate: ${new Date().toLocaleDateString()}\n\n${fr['Expected Duration of the Case'] || ''}`,
+      links: [],
+    });
+    dynamicDocs.push({
+      id: 'recommendation', abbr: 'REC', color: '#b45309',
+      title: 'Decision Recommendation & Actions',
+      meta: `AI Generated · ${new Date().toLocaleDateString()}`,
+      tags: [{ l: 'Recommendation', c: 'amber' }, { l: 'Action Plan', c: 'green' }],
+      desc: 'Recommended legal strategy and step-by-step actions to take for your situation.',
+      content: `${fr['Decision Recommendation'] || ''}\n\nReason: ${fr['Reason for Recommendation'] || ''}\n\nNext Steps:\n${fr['Recommended Next Actions'] || ''}`,
+      downloadable: true,
+      fullText: `DECISION RECOMMENDATION & ACTIONS\nDate: ${new Date().toLocaleDateString()}\n\nRecommendation: ${fr['Decision Recommendation'] || ''}\nReason: ${fr['Reason for Recommendation'] || ''}\n\nNext Steps:\n${fr['Recommended Next Actions'] || ''}`,
+      links: MY_DOCUMENTS[4].links,
+    });
+    // Full report
+    dynamicDocs.push({
+      id: 'full-report', abbr: 'FULL', color: '#dc2626',
+      title: 'Complete Legal Analysis Report',
+      meta: `AI Generated · ${new Date().toLocaleDateString()}`,
+      tags: [{ l: 'Complete Report', c: 'red' }, { l: 'Downloadable', c: 'green' }],
+      desc: 'Full combined report with all sections — summary, outcomes, duration, recommendation, and actions.',
+      content: Object.entries(fr).map(([k, v]) => `**${k}:**\n${v}`).join('\n\n'),
+      downloadable: true,
+      fullText: `COMPLETE LEGAL ANALYSIS REPORT\n${caseSummaryId ? `Case ID: ${caseSummaryId}\n` : ''}Date: ${new Date().toLocaleDateString()}\n${'='.repeat(50)}\n\n${Object.entries(fr).map(([k, v]) => `${k.toUpperCase()}\n${'-'.repeat(40)}\n${v}`).join('\n\n')}`,
+      links: [],
+    });
+  }
+
+  const allDocs = dynamicDocs.length > 0 ? [...dynamicDocs, ...MY_DOCUMENTS.slice(2)] : MY_DOCUMENTS;
+  const [selected, setSelected] = useState(allDocs[0]);
+
   return (
     <div style={{ display: 'flex', flex: 1, overflow: 'hidden', height: '100%' }}>
       {/* Left list */}
       <div style={{ width: 260, flexShrink: 0, borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', background: 'var(--bg-sidebar)', overflow: 'hidden' }}>
         <div style={{ padding: '14px 14px 10px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>My Documents</div>
-          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>Templates, guides &amp; resources</div>
+          <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{fr ? `${dynamicDocs.length} AI reports + templates` : 'Templates, guides & resources'}</div>
         </div>
         <div style={{ flex: 1, overflowY: 'auto' }}>
-          {MY_DOCUMENTS.map(doc => (
+          {allDocs.map(doc => (
             <div key={doc.id} onClick={() => setSelected(doc)} style={{ padding: '10px 14px', cursor: 'pointer', borderBottom: '1px solid rgba(0,0,0,0.04)', background: selected?.id === doc.id ? 'var(--bg-white)' : 'transparent', transition: 'background 0.12s' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 3 }}>
                 <ActBadge abbr={doc.abbr} color={doc.color} />
@@ -234,10 +374,19 @@ function MyDocumentsTab({ switchToLibrary }) {
           <>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
               <ActBadge abbr={selected.abbr} color={selected.color} />
-              <div>
+              <div style={{ flex: 1 }}>
                 <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.02em' }}>{selected.title}</div>
                 <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{selected.meta}</div>
               </div>
+              {selected.downloadable && (
+                <button onClick={() => downloadDoc(selected.title, selected.fullText)} style={{
+                  display: 'flex', alignItems: 'center', gap: 6, padding: '8px 16px', background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                  color: '#fff', border: 'none', borderRadius: 10, fontSize: 12, fontWeight: 600, cursor: 'pointer',
+                  boxShadow: '0 2px 8px rgba(37,99,235,0.25)', transition: 'all 0.2s'
+                }}>
+                  ⬇ Download
+                </button>
+              )}
             </div>
 
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 20 }}>
@@ -245,26 +394,28 @@ function MyDocumentsTab({ switchToLibrary }) {
             </div>
 
             <div style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 14, padding: '18px 20px', marginBottom: 16, boxShadow: 'var(--shadow-xs)' }}>
-              <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', marginBottom: 10 }}>About this document</div>
-              <div style={{ fontSize: 13.5, color: 'var(--text-mid)', lineHeight: 1.65, whiteSpace: 'pre-line' }}>{selected.content}</div>
+              <div style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)', marginBottom: 10 }}>{selected.downloadable ? 'Document Content' : 'About this document'}</div>
+              <div style={{ fontSize: 13.5, color: 'var(--text-mid)', lineHeight: 1.65, whiteSpace: 'pre-line' }} dangerouslySetInnerHTML={{ __html: md(selected.content) }} />
             </div>
 
-            <div style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden', boxShadow: 'var(--shadow-xs)' }}>
-              <div style={{ padding: '12px 18px', borderBottom: '1px solid var(--border)', background: 'var(--bg-card)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)' }}>Official Government Links &amp; References</div>
-              {selected.links.map((lnk, i) => (
-                <a key={i} href={lnk.url} target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 18px', borderBottom: i < selected.links.length - 1 ? '1px solid var(--border)' : 'none', textDecoration: 'none', transition: 'background 0.12s', color: 'inherit' }}
-                  onMouseEnter={e => e.currentTarget.style.background = 'var(--tag-blue)'}
-                  onMouseLeave={e => e.currentTarget.style.background = ''}>
-                  <div style={{ width: 32, height: 32, borderRadius: 7, background: 'var(--bg-card)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--text-muted)' }}><IconDoc /></div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{lnk.label}</div>
-                    <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 1 }}>{new URL(lnk.url).hostname}</div>
-                  </div>
-                  <span style={{ color: 'var(--tag-blue-txt)', display: 'flex', alignItems: 'center', gap: 3, fontSize: 11, fontWeight: 600 }}><IconExternal /> Open</span>
-                </a>
-              ))}
-            </div>
+            {selected.links?.length > 0 && (
+              <div style={{ background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 14, overflow: 'hidden', boxShadow: 'var(--shadow-xs)' }}>
+                <div style={{ padding: '12px 18px', borderBottom: '1px solid var(--border)', background: 'var(--bg-card)', fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.07em', color: 'var(--text-muted)' }}>Official Government Links &amp; References</div>
+                {selected.links.map((lnk, i) => (
+                  <a key={i} href={lnk.url} target="_blank" rel="noopener noreferrer"
+                    style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 18px', borderBottom: i < selected.links.length - 1 ? '1px solid var(--border)' : 'none', textDecoration: 'none', transition: 'background 0.12s', color: 'inherit' }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'var(--tag-blue)'}
+                    onMouseLeave={e => e.currentTarget.style.background = ''}>
+                    <div style={{ width: 32, height: 32, borderRadius: 7, background: 'var(--bg-card)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--text-muted)' }}><IconDoc /></div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text)' }}>{lnk.label}</div>
+                      <div style={{ fontSize: 11, color: 'var(--text-muted)', marginTop: 1 }}>{new URL(lnk.url).hostname}</div>
+                    </div>
+                    <span style={{ color: 'var(--tag-blue-txt)', display: 'flex', alignItems: 'center', gap: 3, fontSize: 11, fontWeight: 600 }}><IconExternal /> Open</span>
+                  </a>
+                ))}
+              </div>
+            )}
           </>
         )}
       </div>
@@ -286,7 +437,7 @@ function LegalLibraryTab() {
         <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Legal Library</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 8, padding: '6px 10px' }}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text-muted)', flexShrink: 0 }}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--text-muted)', flexShrink: 0 }}><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
             <input type="text" placeholder="Search acts, sections…" value={query} onChange={e => setQuery(e.target.value)}
               style={{ flex: 1, border: 'none', background: 'transparent', outline: 'none', fontSize: 12.5, fontFamily: 'inherit', color: 'var(--text)' }} />
           </div>
@@ -372,21 +523,39 @@ function LegalLibraryTab() {
    MAIN APP
 ═══════════════════════════════════════════════ */
 export default function App() {
-  const [sessionId]      = useState(() => `s-${Date.now()}-${Math.random().toString(36).slice(2,5)}`);
-  const [messages,       setMessages]       = useState([]);
-  const [inputText,      setInputText]      = useState('');
-  const [loading,        setLoading]        = useState(false);
-  const [error,          setError]          = useState('');
-  const [phase,          setPhase]          = useState('gathering');
-  const [completeness,   setCompleteness]   = useState(0);
-  const [resolvedAttrs,  setResolvedAttrs]  = useState({});
-  const [exchangeCount,  setExchangeCount]  = useState(0);
-  const [sidebarOpen,    setSidebarOpen]    = useState(false);
-  const [sourcesOpen,    setSourcesOpen]    = useState(false);
-  const [accSections,    setAccSections]    = useState([]);
-  const [activeTab,      setActiveTab]      = useState('Conversations');
+  const [sessionId] = useState(() => `s-${Date.now()}-${Math.random().toString(36).slice(2, 5)}`);
+  const [messages, setMessages] = useState([]);
+  const [inputText, setInputText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [phase, setPhase] = useState('gathering');
+  const [completeness, setCompleteness] = useState(0);
+  const [resolvedAttrs, setResolvedAttrs] = useState({});
+  const [exchangeCount, setExchangeCount] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sourcesOpen, setSourcesOpen] = useState(false);
+  const [accSections, setAccSections] = useState([]);
+  const [activeTab, setActiveTab] = useState('Conversations');
+  const [caseSummaryId, setCaseSummaryId] = useState(null);
+  const [lang, setLang] = useState('en');
+  const [selectedChips, setSelectedChips] = useState({});
+  const [adminModalOpen, setAdminModalOpen] = useState(false);
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPass, setAdminPass] = useState('');
+  const [adminError, setAdminError] = useState('');
+  const [adminLoading, setAdminLoading] = useState(false);
+  const [showLanding, setShowLanding] = useState(true);
 
-  const chatEndRef  = useRef(null);
+  const LANG_OPTIONS = [
+    { code: 'en', label: 'English', flag: 'EN' },
+    { code: 'hi', label: 'हिंदी', flag: 'हि' },
+    { code: 'mr', label: 'मराठी', flag: 'म' },
+    { code: 'ta', label: 'தமிழ்', flag: 'த' },
+    { code: 'bn', label: 'বাংলা', flag: 'বা' },
+    { code: 'te', label: 'తెలుగు', flag: 'తె' },
+  ];
+
+  const chatEndRef = useRef(null);
   const textareaRef = useRef(null);
 
   useEffect(() => { chatEndRef.current?.scrollIntoView({ behavior: 'smooth' }); }, [messages, loading]);
@@ -396,11 +565,69 @@ export default function App() {
     if (el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 120) + 'px'; }
   }, []);
 
+  // Toggle a chip selection
+  // For single-select groups: replaces previous selection
+  // For multi-select groups: adds/removes from list
+  function toggleChip(groupAttr, chipValue, isMulti) {
+    setSelectedChips(prev => {
+      const current = prev[groupAttr] || [];
+      if (isMulti) {
+        // Multi-select: toggle in/out
+        if (current.includes(chipValue)) {
+          return { ...prev, [groupAttr]: current.filter(v => v !== chipValue) };
+        } else {
+          return { ...prev, [groupAttr]: [...current, chipValue] };
+        }
+      } else {
+        // Single-select: exclusive — select or deselect
+        if (current.includes(chipValue)) {
+          return { ...prev, [groupAttr]: [] };
+        } else {
+          return { ...prev, [groupAttr]: [chipValue] };
+        }
+      }
+    });
+  }
+
+  // Send all selected chips as a combined message
+  function sendSelectedChips() {
+    const parts = [];
+    Object.values(selectedChips).forEach(vals => {
+      if (vals.length) parts.push(...vals);
+    });
+    if (parts.length === 0) return;
+    const combined = parts.join('. ') + '.';
+    setSelectedChips({});
+    send(combined);
+  }
+
+  // Count total selected chips
+  const totalSelected = Object.values(selectedChips).reduce((a, v) => a + v.length, 0);
+
+  async function adminLogin() {
+    if (!adminEmail.trim() || !adminPass) { setAdminError('Enter email and password'); return; }
+    setAdminError(''); setAdminLoading(true);
+    try {
+      const fd = new FormData(); fd.append('username', adminEmail.trim()); fd.append('password', adminPass);
+      const r = await fetch(`${API_BASE}/auth/login`, { method: 'POST', body: fd });
+      const d = await r.json();
+      if (!r.ok) throw new Error(d.detail || 'Login failed');
+      if (d.user?.role !== 'admin') throw new Error('Admin access required');
+      sessionStorage.setItem('nd_token', d.access_token);
+      sessionStorage.setItem('nd_email', adminEmail.trim());
+      setAdminModalOpen(false); setAdminEmail(''); setAdminPass('');
+      window.open('/admin-dashboard/', '_blank');
+    } catch (e) {
+      setAdminError(e.message === 'Failed to fetch' ? 'Server unreachable' : e.message);
+    } finally { setAdminLoading(false); }
+  }
+
   async function send(text) {
     if (!text.trim() || loading) return;
     if (activeTab !== 'Conversations') setActiveTab('Conversations');
     setMessages(prev => [...prev, { id: `u-${Date.now()}`, role: 'user', content: text.trim() }]);
     setInputText('');
+    setSelectedChips({});
     setLoading(true);
     setError('');
     if (textareaRef.current) textareaRef.current.style.height = 'auto';
@@ -409,7 +636,7 @@ export default function App() {
       const res = await fetch(`${API_BASE}/chat/message`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionId, message: text.trim() }),
+        body: JSON.stringify({ session_id: sessionId, message: text.trim(), language: lang }),
       });
       if (!res.ok) throw new Error(await res.text() || `Error ${res.status}`);
       const data = await res.json();
@@ -420,18 +647,27 @@ export default function App() {
       setExchangeCount(data.exchange_count || 0);
 
       const actionTags = data.is_final ? buildActionTags(data.final_response) : [];
-      const citations  = data.is_final ? buildCitations(data.final_response)  : [];
-      const sections   = data.is_final ? buildAccordionSections(data.final_response) : [];
+      const citations = data.is_final ? buildCitations(data.final_response) : [];
+      const sections = data.is_final ? buildAccordionSections(data.final_response) : [];
 
       setMessages(prev => [...prev, {
         id: `b-${Date.now()}`,
         role: 'bot',
         content: data.response,
+        phase: data.phase || 'gathering',
         isFinal: data.is_final,
         finalResponse: data.final_response,
+        durationPrediction: data.duration_prediction || null,
+        referenceCases: data.reference_cases || [],
+        maintenancePrediction: data.maintenance_prediction || null,
+        quickReplies: data.quick_replies || [],
         actionTags,
         citations,
       }]);
+
+      if (data.duration_prediction?.header?.case_summary_id) {
+        setCaseSummaryId(data.duration_prediction.header.case_summary_id);
+      }
 
       if (data.is_final && sections.length) {
         setAccSections(sections);
@@ -452,14 +688,172 @@ export default function App() {
   function resetChat() {
     setMessages([]); setPhase('gathering'); setCompleteness(0);
     setResolvedAttrs({}); setExchangeCount(0); setError('');
-    setSourcesOpen(false); setAccSections([]);
+    setSourcesOpen(false); setAccSections([]); setCaseSummaryId(null);
+    setSelectedChips({});
     setActiveTab('Conversations');
-    fetch(`${API_BASE}/chat/reset/${sessionId}`, { method: 'POST' }).catch(() => {});
+    fetch(`${API_BASE}/chat/reset/${sessionId}`, { method: 'POST' }).catch(() => { });
     setSidebarOpen(false);
   }
 
   const showWelcome = messages.length === 0;
   const resolvedList = Object.entries(ATTR_LABELS).filter(([k]) => resolvedAttrs[k]).map(([, label]) => label);
+
+  if (showLanding) {
+    return (
+      <div className="landing-page">
+        {/* Landing Header */}
+        <header className="landing-header">
+          <div className="landing-header-left">
+            <img src="/bot-logo.jpeg" alt="NyayaSakhi" style={{ width: 32, height: 32, borderRadius: 8 }} />
+            <span style={{ fontSize: 15, fontWeight: 700, color: '#111' }}>NyayaSakhi</span>
+          </div>
+          <div className="landing-header-right">
+            <button
+              onClick={() => setAdminModalOpen(true)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 5,
+                padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600,
+                color: '#6b7280', border: '1px solid #e5e7eb', background: '#fff',
+                cursor: 'pointer', transition: 'all 0.15s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = '#6b7280'; }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Admin
+            </button>
+          </div>
+        </header>
+
+        {/* Hero */}
+        <section className="landing-hero">
+          <div className="landing-hero-badge">AI-Powered Legal Assistance for Women in India</div>
+          <h1 className="landing-hero-title">Know Your Rights.<br />Get Legal Guidance.<br /><span style={{ color: '#2563eb' }}>Take Action.</span></h1>
+          <p className="landing-hero-sub">
+            NyayaSakhi is a free AI legal assistant that helps women understand their rights under Indian law —
+            domestic violence, maintenance, custody, dowry, and more. Get instant, confidential guidance backed by
+            actual IPC sections, court precedents, and government resources.
+          </p>
+          <div className="landing-hero-actions">
+            <button className="landing-cta-primary" onClick={() => setShowLanding(false)}>
+              Start Free Consultation
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </button>
+            <button className="landing-cta-secondary" onClick={() => { setShowLanding(false); setActiveTab('Legal library'); }}>
+              Explore Legal Library
+            </button>
+          </div>
+        </section>
+
+        {/* Stats */}
+        <section className="landing-stats">
+          {[
+            { n: '10+', l: 'Indian Laws Covered' },
+            { n: '6', l: 'Languages Supported' },
+            { n: '24/7', l: 'Available Anytime' },
+            { n: '100%', l: 'Free & Confidential' },
+          ].map((s, i) => (
+            <div key={i} className="landing-stat-card">
+              <div className="landing-stat-num">{s.n}</div>
+              <div className="landing-stat-label">{s.l}</div>
+            </div>
+          ))}
+        </section>
+
+        {/* Features */}
+        <section className="landing-features">
+          <h2 className="landing-section-title">How NyayaSakhi Helps</h2>
+          <div className="landing-features-grid">
+            {[
+              { icon: '⚖️', title: 'Case Analysis', desc: 'Describe your situation and get a complete legal analysis — applicable acts, IPC sections, predicted outcomes, and recommended next steps.' },
+              { icon: '📋', title: 'Legal Documents', desc: 'AI-generated case summaries, evidence checklists, Protection Order applications (Form I), and maintenance claim guides — ready to download.' },
+              { icon: '📚', title: 'Legal Library', desc: '10 major Indian laws explained in plain language — PWDVA, IPC 498A, CrPC 125, Dowry Prohibition Act, POSH Act, and more with official govt links.' },
+              { icon: '🔮', title: 'Duration Prediction', desc: 'Based on analysis of similar court cases, get a predicted timeline for your case including factors that may speed up or delay proceedings.' },
+              { icon: '🌐', title: 'Multilingual', desc: 'Available in English, Hindi, Marathi, Tamil, Bengali, and Telugu. Speak in your language and get guidance you can understand.' },
+              { icon: '🔒', title: 'Private & Secure', desc: 'Your conversations are confidential. No personal data is stored or shared. Designed to be a safe space for women seeking help.' },
+            ].map((f, i) => (
+              <div key={i} className="landing-feature-card">
+                <div className="landing-feature-icon">{f.icon}</div>
+                <h3>{f.title}</h3>
+                <p>{f.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Laws covered */}
+        <section className="landing-laws">
+          <h2 className="landing-section-title">Laws & Acts Covered</h2>
+          <div className="landing-laws-grid">
+            {['PWDVA 2005', 'IPC §498A', 'CrPC §125', 'Dowry Prohibition Act', 'Hindu Succession Act', 'POSH Act 2013', 'IT Act — Cyber Crimes', 'Hindu Marriage Act', 'Child Custody (HMGA)', 'BNS 2023'].map((law, i) => (
+              <div key={i} className="landing-law-chip">{law}</div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="landing-bottom-cta">
+          <h2>Ready to understand your legal rights?</h2>
+          <p>Start a free, confidential consultation with NyayaSakhi right now.</p>
+          <button className="landing-cta-primary" onClick={() => setShowLanding(false)}>
+            Start Consultation
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </section>
+
+        {/* Footer */}
+        <footer className="landing-footer">
+          <span>NyayaSakhi — AI Legal Assistant for Women</span>
+          <span>Built with care for Indian women's safety and justice</span>
+        </footer>
+
+        {/* Admin Modal (shared) */}
+        {adminModalOpen && (
+          <div style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }} onClick={(e) => { if (e.target === e.currentTarget) setAdminModalOpen(false); }}>
+            <div style={{
+              background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '32px',
+              width: 360, maxWidth: '95vw', boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+            }}>
+              <div style={{ marginBottom: 20 }}>
+                <div style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>Admin Login</div>
+                <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>Sign in to access the admin dashboard</div>
+              </div>
+              <div style={{ marginBottom: 14 }}>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Email</label>
+                <input type="email" value={adminEmail} onChange={e => setAdminEmail(e.target.value)}
+                  placeholder="admin@example.com"
+                  style={{ width: '100%', padding: '8px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                  onKeyDown={e => e.key === 'Enter' && document.getElementById('admin-pass-input-l')?.focus()}
+                />
+              </div>
+              <div style={{ marginBottom: 16 }}>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Password</label>
+                <input id="admin-pass-input-l" type="password" value={adminPass} onChange={e => setAdminPass(e.target.value)}
+                  placeholder="Enter password"
+                  style={{ width: '100%', padding: '8px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                  onKeyDown={e => e.key === 'Enter' && adminLogin()}
+                />
+              </div>
+              {adminError && (
+                <div style={{ padding: '8px 12px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, fontSize: 12, color: '#dc2626', marginBottom: 12 }}>{adminError}</div>
+              )}
+              <button onClick={adminLogin} disabled={adminLoading}
+                style={{ width: '100%', padding: '10px', borderRadius: 8, background: '#111', color: '#fff', fontWeight: 600, fontSize: 13, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+                {adminLoading ? 'Signing in...' : 'Sign in to Dashboard'}
+              </button>
+              <div style={{ textAlign: 'center', marginTop: 12 }}>
+                <button onClick={() => setAdminModalOpen(false)}
+                  style={{ background: 'none', border: 'none', fontSize: 12, color: '#999', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="app-shell">
@@ -506,9 +900,9 @@ export default function App() {
 
           {/* Past conversations */}
           {[
-            { title: 'Domestic violence intake',   sub: 'Analysis complete · Earlier today' },
+            { title: 'Domestic violence intake', sub: 'Analysis complete · Earlier today' },
             { title: 'Maintenance & alimony query', sub: 'Gathering info · Yesterday' },
-            { title: 'Dowry harassment case',       sub: 'Complete · 2 days ago' },
+            { title: 'Dowry harassment case', sub: 'Complete · 2 days ago' },
           ].map((c, i) => (
             <div key={i} className="conv-item">
               <div className="conv-item-body">
@@ -550,12 +944,27 @@ export default function App() {
                 className={`nav-source-btn${sourcesOpen ? ' open' : ''}`}
                 onClick={() => setSourcesOpen(p => !p)}
               >
-                📚 {sourcesOpen ? 'Hide Sources' : `Sources (${accSections.reduce((a,s)=>a+s.cards.length,0)})`}
+                📚 {sourcesOpen ? 'Hide Sources' : `Sources (${accSections.reduce((a, s) => a + s.cards.length, 0)})`}
               </button>
             )}
             {messages.length >= 2 && (
               <button className="nav-export-btn no-print" onClick={() => window.print()}>↓ Export PDF</button>
             )}
+            <button
+              onClick={() => setAdminModalOpen(true)}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 5,
+                padding: '5px 12px', borderRadius: 7,
+                fontSize: 11.5, fontWeight: 600, color: 'var(--text-muted)',
+                border: '1px solid var(--border)', background: 'var(--bg-white)',
+                textDecoration: 'none', transition: 'all 0.15s', cursor: 'pointer',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb'; }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+              Admin
+            </button>
             <div className="nav-avatar"><img src="/bot-logo.jpeg" alt="avatar" /></div>
           </div>
         </nav>
@@ -568,8 +977,8 @@ export default function App() {
         )}
 
         {/* Tab routing */}
-        {activeTab === 'My documents'  && <div style={{ display:'flex', flex:1, overflow:'hidden', minHeight:0 }}><MyDocumentsTab switchToLibrary={() => setActiveTab('Legal library')} /></div>}
-        {activeTab === 'Legal library' && <div style={{ display:'flex', flex:1, overflow:'hidden', minHeight:0 }}><LegalLibraryTab /></div>}
+        {activeTab === 'My documents' && <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}><MyDocumentsTab switchToLibrary={() => setActiveTab('Legal library')} messages={messages} caseSummaryId={caseSummaryId} /></div>}
+        {activeTab === 'Legal library' && <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}><LegalLibraryTab /></div>}
 
         {/* Conversations tab */}
         {activeTab === 'Conversations' && (
@@ -586,10 +995,10 @@ export default function App() {
                     <h2 className="welcome-heading">How NyayaSakhi Can Help</h2>
                     <div className="feature-grid">
                       {[
-                        { c: 'teal',   icon: '💬', title: 'Start with a conversation', desc: 'Describe your situation freely. I\'ll listen, ask the right questions, and guide you step by step through your legal options.', prompt: 'I need legal help with my situation' },
+                        { c: 'teal', icon: '💬', title: 'Start with a conversation', desc: 'Describe your situation freely. I\'ll listen, ask the right questions, and guide you step by step through your legal options.', prompt: 'I need legal help with my situation' },
                         { c: 'yellow', icon: '📂', title: 'Get a full legal analysis', desc: 'After gathering key facts, I generate a complete legal analysis — predicted outcomes, timelines, and recommended next steps.', prompt: null },
                         { c: 'purple', icon: '⚖️', title: 'Explore the legal library', desc: 'Every answer is backed by Indian laws, IPC sections and court precedents — all viewable in the Sources panel next to your chat.', prompt: null },
-                        { c: 'blue',   icon: '📋', title: 'View case documents', desc: 'Access AI-generated case summaries, evidence checklists, complaint templates, and court application formats.', prompt: null },
+                        { c: 'blue', icon: '📋', title: 'View case documents', desc: 'Access AI-generated case summaries, evidence checklists, complaint templates, and court application formats.', prompt: null },
                       ].map((fc, i) => (
                         <div key={i} className={`feature-card ${fc.c}`} onClick={fc.prompt ? () => send(fc.prompt) : () => setActiveTab(i === 2 ? 'Legal library' : i === 3 ? 'My documents' : 'Conversations')}>
                           <div className="feature-card-icon">{fc.icon}</div>
@@ -616,7 +1025,7 @@ export default function App() {
                 {/* Messages */}
                 {!showWelcome && (
                   <div className="chat-messages">
-                    {messages.map(msg => {
+                    {messages.map((msg, i) => {
                       if (msg.role === 'user') return (
                         <div key={msg.id} className="msg-row user-row">
                           <div className="msg-body">
@@ -660,14 +1069,65 @@ export default function App() {
                                 <span className="analysis-card-header-title">NyayaSakhi Legal Analysis</span>
                                 <span className="analysis-badge">Complete</span>
                               </div>
-                              {Object.entries(msg.finalResponse).map(([title, content]) => (
-                                <div key={title} className="analysis-section">
-                                  <span className={`analysis-section-pill ${PILL_CLS[title] || ''}`}>
-                                    {SECTION_ICONS[title]} {title}
-                                  </span>
-                                  <div className="analysis-section-text" dangerouslySetInnerHTML={{ __html: md(content) }} />
-                                </div>
-                              ))}
+                              {Object.entries(msg.finalResponse).map(([title, content]) => {
+                                const isDuration = title === 'Expected Duration of the Case';
+                                const isOutcome = title === 'Predicted Legal Outcomes';
+                                const dp = msg.durationPrediction;
+                                const refs = msg.referenceCases || [];
+                                return (
+                                  <div key={title} className="analysis-section">
+                                    <span className={`analysis-section-pill ${PILL_CLS[title] || ''}`}>
+                                      {SECTION_ICONS[title]} {title}
+                                    </span>
+                                    <div className="analysis-section-text" dangerouslySetInnerHTML={{ __html: md(content) }} />
+
+                                    {/* Duration section: show prediction ID + reference toggle */}
+                                    {isDuration && dp && (
+                                      <>
+                                        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
+                                          <span style={{ fontSize: 10.5, fontWeight: 700, color: '#059669', background: 'rgba(5,150,105,0.08)', border: '1px solid rgba(5,150,105,0.2)', borderRadius: 6, padding: '3px 10px' }}>
+                                            ID: {dp.header?.case_summary_id}
+                                          </span>
+                                          <span style={{ fontSize: 10.5, fontWeight: 600, color: '#2563eb', background: 'rgba(37,99,235,0.06)', border: '1px solid rgba(37,99,235,0.15)', borderRadius: 6, padding: '3px 10px' }}>
+                                            Confidence: {dp.predicted_duration?.confidence_level}
+                                          </span>
+                                          <span style={{ fontSize: 10.5, fontWeight: 600, color: '#b45309', background: 'rgba(180,83,9,0.06)', border: '1px solid rgba(180,83,9,0.15)', borderRadius: 6, padding: '3px 10px' }}>
+                                            {dp.predicted_duration?.cases_analyzed} cases analyzed
+                                          </span>
+                                        </div>
+                                        {refs.length > 0 && (
+                                          <SourceToggle label={`View ${refs.length} Reference Cases`}>
+                                            {refs.map((rc, ri) => <RefCaseCard key={ri} rc={rc} />)}
+                                            {dp.reasoning?.key_factors && (
+                                              <div style={{ marginTop: 8, paddingTop: 8, borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+                                                <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', marginBottom: 4 }}>KEY FACTORS</div>
+                                                {dp.reasoning.key_factors.map((f, fi) => (
+                                                  <div key={fi} style={{ fontSize: 11.5, color: 'var(--text-mid)', marginBottom: 2 }}>- {f}</div>
+                                                ))}
+                                              </div>
+                                            )}
+                                          </SourceToggle>
+                                        )}
+                                      </>
+                                    )}
+
+                                    {/* Outcome section: show source toggle */}
+                                    {isOutcome && (
+                                      <SourceToggle label="View Legal Sources">
+                                        {accSections.filter(s => s.countCls === 'sources').flatMap(s => s.cards).map((card, ci) => (
+                                          <div key={ci} style={{ padding: '6px 0', borderBottom: '1px solid rgba(0,0,0,0.04)' }}>
+                                            <div style={{ fontSize: 12, fontWeight: 600, color: 'var(--text)' }}>{card.title}</div>
+                                            <div style={{ fontSize: 11.5, color: 'var(--text-muted)', marginTop: 2 }}>{card.body}</div>
+                                          </div>
+                                        ))}
+                                        {accSections.filter(s => s.countCls === 'sources').flatMap(s => s.cards).length === 0 && (
+                                          <div style={{ fontSize: 12, color: 'var(--text-muted)' }}>Sources are shown in the panel on the right.</div>
+                                        )}
+                                      </SourceToggle>
+                                    )}
+                                  </div>
+                                );
+                              })}
 
                               {/* Action tags (LegalBot style) */}
                               {msg.actionTags?.length > 0 && (
@@ -683,9 +1143,35 @@ export default function App() {
                                       📚 {accSections.reduce((a, s) => a + s.cards.length, 0)} legal sources <span className="arrow">→</span>
                                     </button>
                                   )}
-                                </div>
+                                 </div>
                               )}
                             </div>
+
+                            {/* Post-analysis advisory chips */}
+                            {msg.quickReplies?.length > 0 && i === messages.length - 1 && !loading && (
+                              <div className="quick-chips-wrap" style={{ marginTop: 12 }}>
+                                {msg.quickReplies.filter(g => g.attribute === '_advisory').map((group, gi) => (
+                                  <div key={gi} className="chip-group advisory-chip-group" style={{ animationDelay: `${gi * 0.1}s` }}>
+                                    <div className="chip-group-header">
+                                      <span className="chip-group-title">{group.group}</span>
+                                      <span className="chip-group-badge" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563eb' }}>Click to explore</span>
+                                    </div>
+                                    <div className="chip-group-row" style={{ flexWrap: 'wrap' }}>
+                                      {group.chips.map((chip, ci) => (
+                                        <button
+                                          key={ci}
+                                          className="chip-option chip-option-advisory"
+                                          onClick={() => send(chip.value)}
+                                        >
+                                          <span className="chip-option-label">{chip.label}</span>
+                                        </button>
+                                      ))}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+
                           </div>
                         </div>
                       );
@@ -695,6 +1181,87 @@ export default function App() {
                           <div className="msg-avatar bot"><img src="/bot-logo.jpeg" alt="Bot" /></div>
                           <div className="msg-body">
                             <div className="bubble bot" dangerouslySetInnerHTML={{ __html: md(msg.content) }} />
+                            {/* Grouped multi-select quick-reply chips */}
+                            {msg.quickReplies?.length > 0 && i === messages.length - 1 && !loading && (
+                              <div className="quick-chips-wrap">
+                                {msg.quickReplies.map((group, gi) => {
+                                  const isAdvisory = group.attribute === '_advisory';
+                                  const isAction = group.attribute === '_action';
+
+                                  // Advisory chips — single-click-to-send, horizontal layout
+                                  if (isAdvisory) {
+                                    return (
+                                      <div key={gi} className="chip-group advisory-chip-group" style={{ animationDelay: `${gi * 0.1}s` }}>
+                                        <div className="chip-group-header">
+                                          <span className="chip-group-title">{group.group}</span>
+                                          <span className="chip-group-badge" style={{ background: 'rgba(37,99,235,0.08)', color: '#2563eb' }}>Click to ask</span>
+                                        </div>
+                                        <div className="chip-group-row" style={{ flexWrap: 'wrap' }}>
+                                          {group.chips.map((chip, ci) => (
+                                            <button
+                                              key={ci}
+                                              className="chip-option chip-option-advisory"
+                                              onClick={() => send(chip.value)}
+                                            >
+                                              <span className="chip-option-label">{chip.label}</span>
+                                            </button>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    );
+                                  }
+
+                                  // Regular gathering/action chips
+                                  return (
+                                    <div key={gi} className="chip-group" style={{ animationDelay: `${gi * 0.1}s` }}>
+                                      <div className="chip-group-header">
+                                        <span className="chip-group-title">{group.group}</span>
+                                        {group.multi && <span className="chip-group-badge">Select multiple</span>}
+                                      </div>
+                                      <div className="chip-group-row">
+                                        {group.chips.map((chip, ci) => {
+                                          const isPrimary = chip.label.startsWith('\u2705');
+                                          const isSelected = (selectedChips[group.attribute] || []).includes(chip.value);
+                                          return (
+                                            <button
+                                              key={ci}
+                                              className={[
+                                                'chip-option',
+                                                isPrimary ? 'chip-option-primary' : '',
+                                                isSelected ? 'chip-option-selected' : '',
+                                              ].join(' ')}
+                                              onClick={() => {
+                                                if (isAction) {
+                                                  send(chip.value);
+                                                } else {
+                                                  toggleChip(group.attribute, chip.value, group.multi);
+                                                }
+                                              }}
+                                            >
+                                              {isSelected && <span className="chip-check">✓</span>}
+                                              <span className="chip-option-label">{chip.label}</span>
+                                            </button>
+                                          );
+                                        })}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                                {/* Send selected — only for gathering chips */}
+                                {totalSelected > 0 && (
+                                  <button className="chip-send-btn" onClick={sendSelectedChips}>
+                                    Send {totalSelected} selected answer{totalSelected > 1 ? 's' : ''} →
+                                  </button>
+                                )}
+                                {/* Hint — only for gathering phase */}
+                                {msg.phase !== 'advisory' && msg.phase !== 'analysis' && (
+                                  <div className="chips-custom-hint">
+                                    <span className="chips-hint-icon">✏️</span>
+                                    <span>Or type your own answer below</span>
+                                  </div>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </div>
                       );
@@ -745,27 +1312,88 @@ export default function App() {
           </div>
         )}
 
-        {/* Composer — only in Conversations */}
+        {/* Composer — redesigned with language selector */}
         {activeTab === 'Conversations' && (
           <div className="composer-wrap no-print">
             <div className="composer">
-              <button className="composer-action-btn" title="Attach" onClick={() => alert('Upload coming soon')}>+</button>
-              <button className="composer-action-btn" title="At-mention">@</button>
+              {/* Language selector pill */}
+              <div className="lang-selector-wrap">
+                <select
+                  className="lang-select"
+                  value={lang}
+                  onChange={e => setLang(e.target.value)}
+                  title="Select language"
+                >
+                  {LANG_OPTIONS.map(l => (
+                    <option key={l.code} value={l.code}>{l.flag} {l.label}</option>
+                  ))}
+                </select>
+              </div>
               <textarea
                 ref={textareaRef}
                 value={inputText}
                 onChange={e => { setInputText(e.target.value); autoResize(); }}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask NyayaSakhi anything…"
+                placeholder={lang === 'hi' ? 'न्यायसखी से कुछ भी पूछें…' : lang === 'mr' ? 'न्यायसखीला काहीही विचारा…' : 'Ask NyayaSakhi anything…'}
                 disabled={loading}
                 rows={1}
               />
-              <button className="composer-action-btn" title="Voice">🎤</button>
-              <button className="send-btn" onClick={() => send(inputText)} disabled={loading || !inputText.trim()}>➤</button>
+              <button className="send-btn" onClick={() => send(inputText)} disabled={loading || !inputText.trim()}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="22" y1="2" x2="11" y2="13"/>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+                </svg>
+              </button>
             </div>
           </div>
         )}
       </main>
+
+      {/* Admin Login Modal */}
+      {adminModalOpen && (
+        <div style={{
+          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }} onClick={(e) => { if (e.target === e.currentTarget) setAdminModalOpen(false); }}>
+          <div style={{
+            background: 'var(--bg-white, #fff)', border: '1px solid var(--border, #e5e7eb)',
+            borderRadius: 12, padding: '32px', width: 360, maxWidth: '95vw',
+            boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+          }}>
+            <div style={{ marginBottom: 20 }}>
+              <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--text, #111)' }}>Admin Login</div>
+              <div style={{ fontSize: 12, color: 'var(--text-muted, #999)', marginTop: 4 }}>Sign in to access the admin dashboard</div>
+            </div>
+            <div style={{ marginBottom: 14 }}>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--text-mid, #555)', marginBottom: 5 }}>Email</label>
+              <input type="email" value={adminEmail} onChange={e => setAdminEmail(e.target.value)}
+                placeholder="admin@example.com"
+                style={{ width: '100%', padding: '8px 12px', border: '1px solid var(--border, #e5e7eb)', borderRadius: 8, fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                onKeyDown={e => e.key === 'Enter' && document.getElementById('admin-pass-input')?.focus()}
+              />
+            </div>
+            <div style={{ marginBottom: 16 }}>
+              <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: 'var(--text-mid, #555)', marginBottom: 5 }}>Password</label>
+              <input id="admin-pass-input" type="password" value={adminPass} onChange={e => setAdminPass(e.target.value)}
+                placeholder="Enter password"
+                style={{ width: '100%', padding: '8px 12px', border: '1px solid var(--border, #e5e7eb)', borderRadius: 8, fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                onKeyDown={e => e.key === 'Enter' && adminLogin()}
+              />
+            </div>
+            {adminError && (
+              <div style={{ padding: '8px 12px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, fontSize: 12, color: '#dc2626', marginBottom: 12 }}>{adminError}</div>
+            )}
+            <button onClick={adminLogin} disabled={adminLoading}
+              style={{ width: '100%', padding: '10px', borderRadius: 8, background: '#111', color: '#fff', fontWeight: 600, fontSize: 13, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+              {adminLoading ? 'Signing in...' : 'Sign in to Dashboard'}
+            </button>
+            <div style={{ textAlign: 'center', marginTop: 12 }}>
+              <button onClick={() => setAdminModalOpen(false)}
+                style={{ background: 'none', border: 'none', fontSize: 12, color: 'var(--text-muted, #999)', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

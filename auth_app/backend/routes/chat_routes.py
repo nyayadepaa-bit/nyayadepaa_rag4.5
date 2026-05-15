@@ -11,7 +11,7 @@ single source of truth.
 
 from fastapi import APIRouter, HTTPException, Request, status
 from pydantic import BaseModel, Field
-from typing import Optional
+from typing import Any, Optional
 
 from services.rag_workflow import (
     SessionState,
@@ -29,6 +29,7 @@ router = APIRouter(prefix="/chat", tags=["Conversation Flow"])
 class ChatMessageRequest(BaseModel):
     session_id: str = Field(..., min_length=2, max_length=120)
     message: str = Field(..., min_length=1, max_length=10000)
+    language: str = Field(default="en", max_length=10)
 
 
 class ChatMessageResponse(BaseModel):
@@ -40,6 +41,9 @@ class ChatMessageResponse(BaseModel):
     resolved_attributes: dict[str, bool] = {}
     missing_attributes: list[str] = []
     final_response: Optional[dict[str, str]] = None
+    duration_prediction: Optional[dict[str, Any]] = None
+    reference_cases: Optional[list[dict[str, Any]]] = None
+    quick_replies: Optional[list[dict[str, Any]]] = None
 
 
 class SessionInfoResponse(BaseModel):
@@ -73,7 +77,7 @@ async def chat_message(body: ChatMessageRequest, request: Request):
     - Transition to Phase 2 when completeness threshold is met or user requests analysis
     - In Phase 2: Generate the structured legal analysis
     """
-    result = process_message(body.session_id, body.message)
+    result = process_message(body.session_id, body.message, language=body.language)
 
     state = store.get(body.session_id)
     exchange_count = state.exchange_count if state else 0
@@ -87,6 +91,9 @@ async def chat_message(body: ChatMessageRequest, request: Request):
         resolved_attributes=result.get("resolved", {}),
         missing_attributes=result.get("missing", []),
         final_response=result.get("final_response"),
+        duration_prediction=result.get("duration_prediction"),
+        reference_cases=result.get("reference_cases"),
+        quick_replies=result.get("quick_replies"),
     )
 
 

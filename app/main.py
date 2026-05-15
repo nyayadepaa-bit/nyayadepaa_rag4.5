@@ -1231,6 +1231,36 @@ async def upload_pdf(file: UploadFile = File(...)):
             "message": "PDF saved. Use /api/ingest to index it."}
 
 
+class DurationPredictionRequest(BaseModel):
+    case_type: str = Field(..., min_length=2, description="Type of case, e.g. 'Domestic Violence Act Appeal'")
+    court: str = Field(default="District Court", description="Court name or level")
+    jurisdiction: str = Field(default="Maharashtra", description="State/jurisdiction")
+    complexity: str = Field(default="medium", description="low / medium / high")
+    num_parties: int = Field(default=2, ge=1, le=50)
+    evidence_strength: str = Field(default="moderate", description="weak / moderate / strong")
+    has_appeal: bool = Field(default=False)
+    description: str = Field(default="", max_length=2000, description="Free-text case description")
+    urgency: str = Field(default="normal")
+
+
+@app.post("/api/predict_duration")
+async def predict_case_duration(request: DurationPredictionRequest):
+    """
+    RAG-grounded personalized case duration prediction.
+
+    Returns structured output with:
+    - Case Summary ID (ND-YYYYMMDD-XXX)
+    - Personalized estimated duration with confidence
+    - Key reasoning factors and patterns from Indian dataset
+    - Reference cases with durations and similarity explanations
+    """
+    from app.duration_predictor import predict_duration
+
+    params = request.model_dump()
+    result = predict_duration(params)
+    return result
+
+
 @app.post("/api/session/clear")
 async def clear_session(session_id: str = ""):
     if session_id in sessions:
