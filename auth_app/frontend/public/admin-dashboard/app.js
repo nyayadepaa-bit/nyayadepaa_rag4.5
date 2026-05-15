@@ -16,13 +16,11 @@ function toast(msg) {
 }
 
 async function api(path, opts = {}) {
-  if (demo) return mockData(path);
   try {
     const r = await fetch(API + path, { ...opts, headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}`, ...(opts.headers || {}) } });
     if (!r.ok) { const e = await r.json().catch(() => ({})); throw new Error(e.detail || `Error ${r.status}`); }
     return r.json();
   } catch (e) {
-    if (demo || e.message === 'Failed to fetch') { demo = true; return mockData(path); }
     throw e;
   }
 }
