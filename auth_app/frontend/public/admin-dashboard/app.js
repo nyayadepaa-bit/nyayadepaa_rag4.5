@@ -1,5 +1,5 @@
 /* NyayaDepaaAI Admin — Core */
-const API = 'http://localhost:8001/api';
+const API = window.location.hostname === 'localhost' && window.location.port === '7890' ? 'http://localhost:8001/api' : '/api';
 let token = sessionStorage.getItem('nd_token') || '';
 let email = sessionStorage.getItem('nd_email') || '';
 let demo = false;
