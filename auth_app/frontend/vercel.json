@@ -9,6 +9,10 @@
             "destination": "https://nyayasakhi-backend.onrender.com/api/:path*"
         },
         {
+            "source": "/admin-dashboard/(.*)",
+            "destination": "/admin-dashboard/$1"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
