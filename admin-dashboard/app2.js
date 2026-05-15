@@ -5,6 +5,7 @@ async function loadUsers(skip = 0) {
   c.innerHTML = `<div class="tbl-wrap"><div class="tbl-bar">
     <div class="tbl-search"><input id="u-q" placeholder="Search users..." value="${uQ}" /></div>
     <select class="tbl-filter" id="u-r"><option value="">All roles</option><option value="user" ${uR==='user'?'selected':''}>User</option><option value="admin" ${uR==='admin'?'selected':''}>Admin</option></select>
+    <button id="bulk-del-btn" class="act act-danger" style="display:none;margin-left:8px" onclick="bulkDel()">Delete Selected</button>
     <span class="tbl-count" id="u-c">—</span></div>
     <div id="u-b"><div class="loader"><div class="spin-ring"></div>Loading</div></div></div>`;
   let t; $('#u-q').addEventListener('input', e => { uQ = e.target.value; clearTimeout(t); t = setTimeout(() => loadUsers(0), 300); });
@@ -15,8 +16,9 @@ async function loadUsers(skip = 0) {
     $('#u-c').textContent = `${d.length} users`;
     if (!d.length) { $('#u-b').innerHTML = `<div class="empty">No users found</div>`; return; }
     $('#u-b').innerHTML = `<div style="overflow-x:auto"><table>
-      <thead><tr><th>Name</th><th>Email</th><th>City</th><th>Role</th><th>Status</th><th>Activity</th><th>Joined</th><th>Actions</th></tr></thead>
+      <thead><tr><th style="width:40px"><input type="checkbox" id="chk-all" onchange="$$('.chk-u').forEach(c => c.checked = this.checked); updateBulkBtn();"></th><th>Name</th><th>Email</th><th>City</th><th>Role</th><th>Status</th><th>Activity</th><th>Joined</th><th>Actions</th></tr></thead>
       <tbody>${d.map(u => `<tr>
+        <td>${u.role!=='admin'?`<input type="checkbox" class="chk-u" value="${u.id}" onchange="updateBulkBtn()">`:''}</td>
         <td><span class="cell-name">${u.name}</span><br><span class="cell-mono">${(u.id||'').slice(0,8)}</span></td>
         <td class="cell-mono">${u.email||'—'}</td>
         <td>${u.city||'—'}</td>
@@ -31,6 +33,25 @@ async function loadUsers(skip = 0) {
     <div class="pager"><span>${skip+1}–${skip+d.length}</span>
       <div class="pager-btns"><button class="pg" ${skip===0?'disabled':''} onclick="loadUsers(${Math.max(0,skip-50)})">‹</button><button class="pg" ${d.length<50?'disabled':''} onclick="loadUsers(${skip+50})">›</button></div></div>`;
   } catch (x) { $('#u-b').innerHTML = `<div class="empty">${x.message}</div>`; }
+}
+function updateBulkBtn() {
+  const sel = $$('.chk-u:checked').length;
+  const btn = $('#bulk-del-btn');
+  if (btn) {
+    btn.style.display = sel > 0 ? 'inline-block' : 'none';
+    btn.textContent = `Delete Selected (${sel})`;
+  }
+}
+async function bulkDel() {
+  const ids = $$('.chk-u:checked').map(c => c.value);
+  if (!ids.length || !confirm(`Delete ${ids.length} selected users?`)) return;
+  if (demo) { toast(`Deleted ${ids.length} users`); loadUsers(uS); return; }
+  try {
+    $('#bulk-del-btn').textContent = 'Deleting...';
+    await api('/admin/users/bulk-delete', { method: 'POST', body: JSON.stringify({ user_ids: ids }) });
+    toast(`Deleted ${ids.length} users`);
+    loadUsers(uS);
+  } catch(x) { toast(x.message); $('#bulk-del-btn').textContent = `Delete Selected`; }
 }
 async function togUser(id, s) { if (demo) { toast(`User ${s?'enabled':'disabled'}`); loadUsers(uS); return; }
   try { await api(`/admin/users/${id}/toggle`,{method:'PATCH',body:JSON.stringify({is_active:s})}); toast('Updated'); loadUsers(uS); } catch(x){ toast(x.message); } }
