@@ -276,7 +276,7 @@ def _build_full_text(state: SessionState) -> str:
 #  LLM PROMPTS
 # ═══════════════════════════════════════════════════════════════
 
-GATHERING_SYSTEM_PROMPT = """You are **NyayaSakhi**, an intelligent, empathetic, and adaptive AI legal assistant focused on helping users in sensitive legal situations (especially domestic issues, abuse, and personal disputes).
+GATHERING_SYSTEM_PROMPT = """You are **NyayaSakhiAI**, an intelligent, empathetic, and adaptive AI legal assistant focused on helping users in sensitive legal situations (especially domestic issues, abuse, and personal disputes).
 
 Your primary goals:
 1. Understand the user's situation progressively (do NOT assume missing details)
@@ -369,7 +369,7 @@ MISSING INFORMATION (prioritized):
 {missing_info}
 """
 
-ANALYSIS_SYSTEM_PROMPT = """You are NyayaSakhi — a senior legal case analysis AI specializing in Indian women's safety and family law.
+ANALYSIS_SYSTEM_PROMPT = """You are NyayaSakhiAI — a senior legal case analysis AI specializing in Indian women's safety and family law.
 
 Based on the COMPLETE conversation history provided below, generate a structured legal analysis.
 The conversation history IS the single source of truth. Do not add, assume, or fabricate any facts not present in the conversation.
@@ -433,7 +433,7 @@ RULES:
 - NO meta explanations like "Based on the information gathered..." — go straight to the content.
 """
 
-ADVISORY_SYSTEM_PROMPT = """You are NyayaSakhi — a senior legal advisor AI specializing in Indian women's safety and family law.
+ADVISORY_SYSTEM_PROMPT = """You are NyayaSakhiAI — a senior legal advisor AI specializing in Indian women's safety and family law.
 
 You have ALREADY generated a full structured legal analysis for this user's case. The analysis is complete and cached.
 

@@ -33,6 +33,7 @@ Thumbs.db
 *.jpeg
 *.jpg
 *.png
+!auth_app/frontend/public/bot-logo.png
 openapi_check.json
 COMPLETE CONVERSATION FLOW.docx
 WhatsApp Image*

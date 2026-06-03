@@ -734,8 +734,8 @@ export default function App() {
         {/* Landing Header */}
         <header className="landing-header">
           <div className="landing-header-left">
-            <img src="/bot-logo.jpeg" alt="NyayaSakhi" style={{ width: 32, height: 32, borderRadius: 8 }} />
-            <span style={{ fontSize: 15, fontWeight: 700, color: '#111' }}>NyayaSakhi</span>
+            <img src="/bot-logo.png" alt="NyayaSakhiAI" style={{ width: 32, height: 32, borderRadius: 8 }} />
+            <span style={{ fontSize: 15, fontWeight: 700, color: '#111' }}>NyayaSakhiAI</span>
           </div>
           <div className="landing-header-right">
             <button
@@ -760,7 +760,7 @@ export default function App() {
           <div className="landing-hero-badge">AI-Powered Legal Assistance for Women in India</div>
           <h1 className="landing-hero-title">Know Your Rights.<br />Get Legal Guidance.<br /><span style={{ color: '#2563eb' }}>Take Action.</span></h1>
           <p className="landing-hero-sub">
-            NyayaSakhi is a free AI legal assistant that helps women understand their rights under Indian law —
+            NyayaSakhiAI is a free AI legal assistant that helps women understand their rights under Indian law —
             domestic violence, maintenance, custody, dowry, and more. Get instant, confidential guidance backed by
             actual IPC sections, court precedents, and government resources.
           </p>
@@ -792,7 +792,7 @@ export default function App() {
 
         {/* Features */}
         <section className="landing-features">
-          <h2 className="landing-section-title">How NyayaSakhi Helps</h2>
+          <h2 className="landing-section-title">How NyayaSakhiAI Helps</h2>
           <div className="landing-features-grid">
             {[
               { icon: '⚖️', title: 'Case Analysis', desc: 'Describe your situation and get a complete legal analysis — applicable acts, IPC sections, predicted outcomes, and recommended next steps.' },
@@ -824,7 +824,7 @@ export default function App() {
         {/* CTA */}
         <section className="landing-bottom-cta">
           <h2>Ready to understand your legal rights?</h2>
-          <p>Start a free, confidential consultation with NyayaSakhi right now.</p>
+          <p>Start a free, confidential consultation with NyayaSakhiAI right now.</p>
           <button className="landing-cta-primary" onClick={() => setGuestModalOpen(true)}>
             Start Consultation
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -833,7 +833,7 @@ export default function App() {
 
         {/* Footer */}
         <footer className="landing-footer">
-          <span>NyayaSakhi — AI Legal Assistant for Women</span>
+          <span>NyayaSakhiAI — AI Legal Assistant for Women</span>
           <span>Built with care for Indian women's safety and justice</span>
         </footer>
 
@@ -894,7 +894,7 @@ export default function App() {
             }}>
               <div style={{ marginBottom: 20 }}>
                 <div style={{ fontSize: 18, fontWeight: 700, color: '#111' }}>Get Started</div>
-                <div style={{ fontSize: 13, color: '#666', marginTop: 4 }}>Tell us a bit about yourself so NyayaSakhi can assist you better. Your info is confidential.</div>
+                <div style={{ fontSize: 13, color: '#666', marginTop: 4 }}>Tell us a bit about yourself so NyayaSakhiAI can assist you better. Your info is confidential.</div>
               </div>
               <div style={{ marginBottom: 14 }}>
                 <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Your Name / Alias</label>
@@ -983,8 +983,8 @@ export default function App() {
       <aside className={`app-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="sidebar-top">
           <div className="sidebar-brand">
-            <img src="/bot-logo.jpeg" alt="NyayaSakhi" />
-            <span className="sidebar-brand-name">NyayaSakhi</span>
+            <img src="/bot-logo.png" alt="NyayaSakhiAI" />
+            <span className="sidebar-brand-name">NyayaSakhiAI</span>
           </div>
           <button className="new-conv-btn" onClick={resetChat}>+ New conversation</button>
         </div>
@@ -1086,7 +1086,7 @@ export default function App() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
               Admin
             </button>
-            <div className="nav-avatar"><img src="/bot-logo.jpeg" alt="avatar" /></div>
+            <div className="nav-avatar"><img src="/bot-logo.png" alt="avatar" /></div>
           </div>
         </nav>
 
@@ -1113,7 +1113,7 @@ export default function App() {
                 {/* Welcome screen */}
                 {showWelcome && (
                   <div className="welcome-screen">
-                    <h2 className="welcome-heading">How NyayaSakhi Can Help</h2>
+                    <h2 className="welcome-heading">How NyayaSakhiAI Can Help</h2>
                     <div className="feature-grid">
                       {[
                         { c: 'teal', icon: '💬', title: 'Start with a conversation', desc: 'Describe your situation freely. I\'ll listen, ask the right questions, and guide you step by step through your legal options.', prompt: 'I need legal help with my situation' },
@@ -1158,7 +1158,7 @@ export default function App() {
 
                       if (msg.isFinal && msg.finalResponse) return (
                         <div key={msg.id} className="msg-row bot-row">
-                          <div className="msg-avatar bot"><img src="/bot-logo.jpeg" alt="Bot" /></div>
+                          <div className="msg-avatar bot"><img src="/bot-logo.png" alt="Bot" /></div>
                           <div className="msg-body" style={{ maxWidth: '100%', flex: 1 }}>
 
                             {/* Inline citation cards (like PDF preview) */}
@@ -1187,7 +1187,7 @@ export default function App() {
                             <div className="analysis-card">
                               <div className="analysis-card-header">
                                 <span style={{ fontSize: 15 }}>⚖️</span>
-                                <span className="analysis-card-header-title">NyayaSakhi Legal Analysis</span>
+                                <span className="analysis-card-header-title">NyayaSakhiAI Legal Analysis</span>
                                 <span className="analysis-badge">Complete</span>
                               </div>
                               {Object.entries(msg.finalResponse).map(([title, content]) => {
@@ -1299,7 +1299,7 @@ export default function App() {
 
                       return (
                         <div key={msg.id} className="msg-row bot-row">
-                          <div className="msg-avatar bot"><img src="/bot-logo.jpeg" alt="Bot" /></div>
+                          <div className="msg-avatar bot"><img src="/bot-logo.png" alt="Bot" /></div>
                           <div className="msg-body">
                             <div className="bubble bot" dangerouslySetInnerHTML={{ __html: md(msg.content) }} />
                             {/* Grouped multi-select quick-reply chips */}
@@ -1390,7 +1390,7 @@ export default function App() {
 
                     {loading && (
                       <div className="msg-row bot-row no-print">
-                        <div className="msg-avatar bot"><img src="/bot-logo.jpeg" alt="Bot" /></div>
+                        <div className="msg-avatar bot"><img src="/bot-logo.png" alt="Bot" /></div>
                         <div className="msg-body">
                           <div className="typing-bubble"><span /><span /><span /></div>
                         </div>
