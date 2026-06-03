@@ -336,7 +336,12 @@ async def delete_user(
         ip_address=ip,
     )
 
+    # Explicitly delete dependent records to avoid foreign key constraint errors
+    await db.execute(sa_delete(AIQuery).where(AIQuery.user_id == user_id))
+    await db.execute(sa_delete(UserActivity).where(UserActivity.user_id == user_id))
+
     await db.delete(user)
+    await db.commit()
     await cache_delete("admin:analytics")
     return {"message": f"User {name} ({email}) deleted"}
 
@@ -372,9 +377,15 @@ async def bulk_delete_users(
             details=f"Bulk deleted: {name} ({email}) city={city}",
             ip_address=ip,
         )
+        
+        # Explicitly delete dependent records to avoid foreign key constraint errors
+        await db.execute(sa_delete(AIQuery).where(AIQuery.user_id == uid))
+        await db.execute(sa_delete(UserActivity).where(UserActivity.user_id == uid))
+
         await db.delete(user)
         deleted += 1
 
+    await db.commit()
     await cache_delete("admin:analytics")
     return {"message": f"{deleted} user(s) deleted"}
 
