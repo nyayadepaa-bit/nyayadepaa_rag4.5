@@ -734,7 +734,7 @@ export default function App() {
         {/* Landing Header */}
         <header className="landing-header">
           <div className="landing-header-left">
-            <img src="/bot-logo.png" alt="NyayaSakhiAI" style={{ width: 32, height: 32, borderRadius: 8 }} />
+            <img src="/bot-logo.png" alt="NyayaSakhiAI" style={{ width: 42, height: 42, borderRadius: '50%', objectFit: 'cover', objectPosition: 'top' }} />
             <span style={{ fontSize: 15, fontWeight: 700, color: '#111' }}>NyayaSakhiAI</span>
           </div>
           <div className="landing-header-right">

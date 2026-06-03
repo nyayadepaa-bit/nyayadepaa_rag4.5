@@ -125,11 +125,12 @@ body {
 }
 
 .sidebar-brand img {
-  width: 28px;
-  height: 28px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: 1px solid var(--border-dark);
   object-fit: cover;
+  object-position: top;
 }
 
 .sidebar-brand-name {
@@ -378,8 +379,8 @@ body {
 }
 
 .nav-avatar {
-  width: 30px;
-  height: 30px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   overflow: hidden;
   border: 1.5px solid var(--border-dark);
@@ -390,6 +391,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
 }
 
 .nav-source-btn {
@@ -602,8 +604,8 @@ body {
 }
 
 .msg-avatar {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
   border-radius: 50%;
   flex-shrink: 0;
   overflow: hidden;
@@ -630,6 +632,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: top;
 }
 
 .msg-body {
