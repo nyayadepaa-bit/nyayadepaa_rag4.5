@@ -3174,33 +3174,39 @@ body {
 
 /* ── Responsive ─────────────────────── */
 @media (max-width: 900px) {
-  .landing-hero { grid-template-columns: 1fr; max-height: none; }
-  .landing-hero-right { height: 300px; }
-  .landing-hero-left { padding: 36px 24px; }
-  .landing-hero-title { font-size: 28px; }
+  .landing-hero { grid-template-columns: 1fr; max-height: none; padding-bottom: 20px; }
+  .landing-hero-right { height: 350px; order: 2; }
+  .landing-hero-left { padding: 40px 24px; text-align: center; align-items: center; order: 1; }
+  .landing-hero-title { font-size: 32px; }
+  .landing-hero-sub { margin-left: auto; margin-right: auto; }
+  .landing-hero-actions { justify-content: center; }
+  .landing-trust-badges { justify-content: center; }
+  
   .landing-features-row { grid-template-columns: 1fr 1fr; }
   .landing-nav { display: none; }
   .landing-stats { grid-template-columns: repeat(2, 1fr); }
   .landing-features-grid { grid-template-columns: 1fr; }
   .landing-footer { flex-direction: column; gap: 10px; padding: 14px 20px; }
   
+  /* App Shell Mobile */
   .app-sidebar {
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
-    margin-left: 0;
+    z-index: 1000;
     transform: translateX(-100%);
+    box-shadow: var(--shadow-md);
   }
   .app-sidebar.open {
     transform: translateX(0);
-    margin-left: 0;
   }
   .sidebar-overlay {
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    position: fixed;
+    inset: 0;
     background: rgba(0,0,0,0.4);
-    z-index: 90;
+    backdrop-filter: blur(2px);
+    z-index: 999;
     animation: fadeIn 0.2s ease-out;
   }
 }
@@ -3212,7 +3218,18 @@ body {
 
 @media (max-width: 600px) {
   .landing-header { padding: 0 16px; height: 56px; }
+  .landing-hero-title { font-size: 28px; }
+  .landing-hero-left { padding: 30px 20px; }
   .landing-features-row { grid-template-columns: 1fr; }
   .landing-feat-card { border-right: none; border-bottom: 1px solid #f5c6d8; }
+  
+  /* Chat Mobile Adjustments */
+  .feature-grid { grid-template-columns: 1fr; gap: 10px; }
+  .messages-area { padding: 0 16px 20px; }
+  .chat-input-area { padding: 12px 16px 16px; }
+  .top-nav { padding: 0 12px; }
+  .msg-avatar { width: 28px; height: 28px; }
+  .msg-row { gap: 10px; }
+  .bubble { font-size: 13.5px; padding: 12px 14px; }
 }
 

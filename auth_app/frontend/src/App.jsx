@@ -1038,6 +1038,11 @@ export default function App() {
   return (
     <div className="app-shell">
 
+      {/* ── Sidebar Overlay (Mobile) ───────────── */}
+      {sidebarOpen && window.innerWidth <= 900 && (
+        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+      )}
+
       {/* ── Sidebar ───────────────────────────── */}
       <aside className={`app-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="sidebar-top">
