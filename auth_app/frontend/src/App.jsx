@@ -806,7 +806,7 @@ export default function App() {
             <img
               src="/hero-woman-new.jpg"
               alt="NyayaSakhi SWATI — AI Legal Companion"
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }}
+              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', maskImage: 'radial-gradient(ellipse 50% 50% at 50% 45%, black 75%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 50% 50% at 50% 45%, black 75%, transparent 100%)' }}
               onError={e => { e.target.style.display = 'none'; }}
             />
             <div className="landing-hero-card">
