@@ -804,7 +804,7 @@ export default function App() {
           {/* Right: Hero Image */}
           <div className="landing-hero-right" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <img
-              src="/hero-woman.png"
+              src="/hero-woman-new.jpg"
               alt="NyayaSakhi SWATI — AI Legal Companion"
               style={{ width: '80%', height: 'auto', objectFit: 'contain', maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 70%)', WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 70%)' }}
               onError={e => { e.target.style.display = 'none'; }}
@@ -1042,7 +1042,7 @@ export default function App() {
       <aside className={`app-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="sidebar-top">
           <div className="sidebar-brand" onClick={() => setShowLanding(true)} style={{ cursor: 'pointer' }}>
-            <img src="/hero-woman.png" alt="NyayaSakhi" />
+            <img src="/hero-woman-new.jpg" alt="NyayaSakhi" />
             <span className="sidebar-brand-name">NyayaSakhi</span>
           </div>
           <button className="new-conv-btn" onClick={resetChat}>+ New conversation</button>
@@ -1145,7 +1145,7 @@ export default function App() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
               Admin
             </button>
-            <div className="nav-avatar"><img src="/hero-woman.png" alt="avatar" /></div>
+            <div className="nav-avatar"><img src="/hero-woman-new.jpg" alt="avatar" /></div>
           </div>
         </nav>
 
@@ -1220,7 +1220,7 @@ export default function App() {
 
                       if (msg.isFinal && msg.finalResponse) return (
                         <div key={msg.id} className="msg-row bot-row">
-                          <div className="msg-avatar bot"><img src="/hero-woman.png" alt="Bot" /></div>
+                          <div className="msg-avatar bot"><img src="/hero-woman-new.jpg" alt="Bot" /></div>
                           <div className="msg-body" style={{ maxWidth: '100%', flex: 1 }}>
 
                             {/* Inline citation cards (like PDF preview) */}
@@ -1361,7 +1361,7 @@ export default function App() {
 
                       return (
                         <div key={msg.id} className="msg-row bot-row">
-                          <div className="msg-avatar bot"><img src="/hero-woman.png" alt="Bot" /></div>
+                          <div className="msg-avatar bot"><img src="/hero-woman-new.jpg" alt="Bot" /></div>
                           <div className="msg-body">
                             <div className="bubble bot" dangerouslySetInnerHTML={{ __html: md(msg.content) }} />
                             {/* Grouped multi-select quick-reply chips */}
