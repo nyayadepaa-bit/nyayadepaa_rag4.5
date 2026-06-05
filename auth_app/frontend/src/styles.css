@@ -473,6 +473,110 @@ body {
   background: var(--border);
 }
 
+/* ── Top bar (new 2-row layout) ──────────────── */
+.top-bar {
+  height: 52px;
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-xs);
+  gap: 8px;
+}
+
+.top-bar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.top-bar-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.top-bar-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.top-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.admin-btn-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  border-radius: 7px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  background: var(--bg-white);
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.15s;
+}
+
+.admin-btn-nav:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+/* ── Sub-nav bar (section tabs) ─────────────── */
+.sub-nav-bar {
+  background: var(--bg-white);
+  border-bottom: 2px solid var(--border);
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  padding: 0 12px;
+  flex-shrink: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.sub-nav-bar::-webkit-scrollbar { display: none; }
+
+.sub-nav-tab {
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color 0.15s, border-color 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sub-nav-tab:hover {
+  color: var(--text);
+}
+
+.sub-nav-tab.active {
+  color: var(--brand);
+  font-weight: 600;
+  border-bottom-color: var(--brand);
+}
+
 /* Progress */
 .progress-bar {
   height: 2px;

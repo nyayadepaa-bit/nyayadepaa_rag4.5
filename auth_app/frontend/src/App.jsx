@@ -1107,59 +1107,50 @@ export default function App() {
       {/* ── Main ──────────────────────────────── */}
       <main className="app-main">
 
-        {/* Top nav — 3 tabs, no Live consultants */}
-        <nav className="top-nav no-print">
-          <div className="top-nav-left">
+        {/* ── Top bar (row 1): menu + logo + actions ── */}
+        <div className="top-bar no-print">
+          <div className="top-bar-left">
             <button className="menu-btn-nav" onClick={() => setSidebarOpen(p => !p)}>☰</button>
-            <div className="top-nav-brand mobile-only">
+            <div className="top-bar-brand">
               <img src="/hero-woman-transparent.png" alt="NyayaSakhi" style={{ backgroundColor: '#fff', width: 24, height: 24, borderRadius: '50%', objectFit: 'cover' }} />
-              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>NyayaSakhi</span>
+              <span className="top-bar-name">NyayaSakhi</span>
             </div>
           </div>
-          <div className="top-nav-center">
-            {['Conversations', 'My documents', 'Legal library'].map(t => (
-              <button
-                key={t}
-                className={`nav-tab${activeTab === t ? ' active' : ''}`}
-                onClick={() => setActiveTab(t)}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-          <div className="top-nav-right">
+          <div className="top-bar-right">
             {accSections.length > 0 && activeTab === 'Conversations' && (
               <button
                 className={`nav-source-btn${sourcesOpen ? ' open' : ''}`}
                 onClick={() => setSourcesOpen(p => !p)}
               >
-                📚 {sourcesOpen ? 'Hide Sources' : `Sources (${accSections.reduce((a, s) => a + s.cards.length, 0)})`}
+                📚 {sourcesOpen ? 'Hide' : `Sources (${accSections.reduce((a, s) => a + s.cards.length, 0)})`}
               </button>
             )}
             {messages.length >= 2 && (
-              <button className="nav-export-btn no-print" onClick={() => window.print()}>
-                <span className="desktop-only">↓ Export PDF</span>
-                <span className="mobile-only" style={{ display: 'none' /* overridden by CSS on mobile */ }}>↓ PDF</span>
-              </button>
+              <button className="nav-export-btn no-print" onClick={() => window.print()}>↓ PDF</button>
             )}
             <button
               onClick={() => setAdminModalOpen(true)}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 5,
-                padding: '5px 12px', borderRadius: 7,
-                fontSize: 11.5, fontWeight: 600, color: 'var(--text-muted)',
-                border: '1px solid var(--border)', background: 'var(--bg-white)',
-                textDecoration: 'none', transition: 'all 0.15s', cursor: 'pointer',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--text-muted)'; }}
+              className="admin-btn-nav"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
               Admin
             </button>
-            <div className="nav-avatar"><img src="/hero-woman-transparent.png" alt="avatar" style={{ backgroundColor: '#fff' }} /></div>
+            <div className="nav-avatar desktop-only"><img src="/hero-woman-transparent.png" alt="avatar" style={{ backgroundColor: '#fff' }} /></div>
           </div>
-        </nav>
+        </div>
+
+        {/* ── Sub-nav bar (row 2): section tabs ── */}
+        <div className="sub-nav-bar no-print">
+          {['Conversations', 'My documents', 'Legal library'].map(t => (
+            <button
+              key={t}
+              className={`sub-nav-tab${activeTab === t ? ' active' : ''}`}
+              onClick={() => setActiveTab(t)}
+            >
+              {t === 'Conversations' ? '💬' : t === 'My documents' ? '📄' : '📚'} {t}
+            </button>
+          ))}
+        </div>
 
         {/* Progress bar */}
         {!showWelcome && phase === 'gathering' && activeTab === 'Conversations' && (
