@@ -735,7 +735,7 @@ export default function App() {
         {/* ── Header ─────────────────────────────── */}
         <header className="landing-header">
           <div className="landing-header-left">
-            <img src="/hero-woman-new.jpg" alt="Logo" className="landing-brand-logo" style={{ objectFit: 'cover', objectPosition: 'top', padding: 0 }} />
+            <img src="/hero-woman-transparent.png" alt="Logo" className="landing-brand-logo" style={{ objectFit: 'cover', objectPosition: 'top', padding: 0, backgroundColor: '#fff' }} />
             <div className="landing-brand-text">
               <span className="landing-brand-name">NyayaSakhi</span>
               <span className="landing-brand-sub">AI Legal Companion by Dipali Awasekar</span>
@@ -804,9 +804,9 @@ export default function App() {
           {/* Right: Hero Image */}
           <div className="landing-hero-right" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <img
-              src="/hero-woman-new.jpg"
+              src="/hero-woman-transparent.png"
               alt="NyayaSakhi SWATI — AI Legal Companion"
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }}
+              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}
               onError={e => { e.target.style.display = 'none'; }}
             />
             <div className="landing-hero-card">
@@ -1042,7 +1042,7 @@ export default function App() {
       <aside className={`app-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="sidebar-top">
           <div className="sidebar-brand" onClick={() => setShowLanding(true)} style={{ cursor: 'pointer' }}>
-            <img src="/hero-woman-new.jpg" alt="NyayaSakhi" />
+            <img src="/hero-woman-transparent.png" alt="NyayaSakhi" style={{ backgroundColor: '#fff' }} />
             <span className="sidebar-brand-name">NyayaSakhi</span>
           </div>
           <button className="new-conv-btn" onClick={resetChat}>+ New conversation</button>
@@ -1145,7 +1145,7 @@ export default function App() {
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
               Admin
             </button>
-            <div className="nav-avatar"><img src="/hero-woman-new.jpg" alt="avatar" /></div>
+            <div className="nav-avatar"><img src="/hero-woman-transparent.png" alt="avatar" style={{ backgroundColor: '#fff' }} /></div>
           </div>
         </nav>
 
@@ -1220,7 +1220,7 @@ export default function App() {
 
                       if (msg.isFinal && msg.finalResponse) return (
                         <div key={msg.id} className="msg-row bot-row">
-                          <div className="msg-avatar bot"><img src="/hero-woman-new.jpg" alt="Bot" /></div>
+                          <div className="msg-avatar bot"><img src="/hero-woman-transparent.png" alt="Bot" style={{ backgroundColor: '#fff' }} /></div>
                           <div className="msg-body" style={{ maxWidth: '100%', flex: 1 }}>
 
                             {/* Inline citation cards (like PDF preview) */}
@@ -1361,7 +1361,7 @@ export default function App() {
 
                       return (
                         <div key={msg.id} className="msg-row bot-row">
-                          <div className="msg-avatar bot"><img src="/hero-woman-new.jpg" alt="Bot" /></div>
+                          <div className="msg-avatar bot"><img src="/hero-woman-transparent.png" alt="Bot" style={{ backgroundColor: '#fff' }} /></div>
                           <div className="msg-body">
                             <div className="bubble bot" dangerouslySetInnerHTML={{ __html: md(msg.content) }} />
                             {/* Grouped multi-select quick-reply chips */}
