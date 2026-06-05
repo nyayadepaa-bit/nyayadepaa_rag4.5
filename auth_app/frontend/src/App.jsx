@@ -532,7 +532,7 @@ export default function App() {
   const [completeness, setCompleteness] = useState(0);
   const [resolvedAttrs, setResolvedAttrs] = useState({});
   const [exchangeCount, setExchangeCount] = useState(0);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(() => window.innerWidth > 900);
   const [sourcesOpen, setSourcesOpen] = useState(false);
   const [accSections, setAccSections] = useState([]);
   const [activeTab, setActiveTab] = useState('Conversations');
