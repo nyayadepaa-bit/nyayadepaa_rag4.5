@@ -1111,6 +1111,10 @@ export default function App() {
         <nav className="top-nav no-print">
           <div className="top-nav-left">
             <button className="menu-btn-nav" onClick={() => setSidebarOpen(p => !p)}>☰</button>
+            <div className="top-nav-brand mobile-only">
+              <img src="/hero-woman-transparent.png" alt="NyayaSakhi" style={{ backgroundColor: '#fff', width: 24, height: 24, borderRadius: '50%', objectFit: 'cover' }} />
+              <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)' }}>NyayaSakhi</span>
+            </div>
           </div>
           <div className="top-nav-center">
             {['Conversations', 'My documents', 'Legal library'].map(t => (

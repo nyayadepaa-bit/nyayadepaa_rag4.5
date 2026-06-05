@@ -340,8 +340,14 @@ body {
 .top-nav-left {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
   flex-shrink: 0;
+}
+
+.top-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .top-nav-center {
@@ -351,6 +357,9 @@ body {
   flex: 1;
   justify-content: center;
 }
+
+.desktop-only { display: inherit; }
+.mobile-only { display: none !important; }
 
 .top-nav-right {
   display: flex;
@@ -491,6 +500,7 @@ body {
   flex-direction: row;
   overflow: hidden;
   min-height: 0;
+  position: relative;
 }
 
 /* Messages */
@@ -3189,6 +3199,13 @@ body {
   .landing-footer { flex-direction: column; gap: 10px; padding: 14px 20px; }
   
   /* App Shell Mobile */
+  .desktop-only { display: none !important; }
+  .mobile-only { display: inherit !important; }
+  .top-nav-brand.mobile-only { display: flex !important; }
+  
+  .top-nav-center { display: none; } /* Hide tabs on mobile to save space */
+  .top-nav-right .nav-export-btn { display: none; } /* Hide export on mobile */
+
   .app-sidebar {
     position: fixed;
     top: 0;
@@ -3208,6 +3225,19 @@ body {
     backdrop-filter: blur(2px);
     z-index: 999;
     animation: fadeIn 0.2s ease-out;
+  }
+  
+  /* Sources Panel Mobile overlay */
+  .sources-panel {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 900;
+    width: 100%;
+    max-width: 360px;
+    border-left: none;
+    box-shadow: -8px 0 24px rgba(0,0,0,0.1);
   }
 }
 
