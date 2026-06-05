@@ -731,185 +731,217 @@ export default function App() {
   if (showLanding) {
     return (
       <div className="landing-page">
-        {/* Landing Header */}
+
+        {/* ── Header ─────────────────────────────── */}
         <header className="landing-header">
           <div className="landing-header-left">
-            <img src="/bot-logo.png" alt="NyayaSakhiAI" style={{ width: 42, height: 42, borderRadius: '50%', objectFit: 'cover', objectPosition: 'top' }} />
-            <span style={{ fontSize: 15, fontWeight: 700, color: '#111' }}>NyayaSakhiAI</span>
+            <div className="landing-brand-logo">🌸</div>
+            <div className="landing-brand-text">
+              <span className="landing-brand-name">NyayaSakhi</span>
+              <span className="landing-brand-sub">AI Legal Companion by Dipali Awasekar</span>
+            </div>
           </div>
+
+          <nav className="landing-nav">
+            {['Home', 'About SWATI', 'Legal Library', 'Laws Covered', 'Resources', 'Contact'].map((item, i) => (
+              <button key={item} className={`landing-nav-link${i === 0 ? ' active' : ''}`}
+                onClick={i === 2 ? () => { setShowLanding(false); setActiveTab('Legal library'); } : undefined}>
+                {item}
+              </button>
+            ))}
+          </nav>
+
           <div className="landing-header-right">
-            <button
-              onClick={() => setAdminModalOpen(true)}
-              style={{
-                display: 'inline-flex', alignItems: 'center', gap: 5,
-                padding: '6px 14px', borderRadius: 8, fontSize: 12, fontWeight: 600,
-                color: '#6b7280', border: '1px solid #e5e7eb', background: '#fff',
-                cursor: 'pointer', transition: 'all 0.15s',
-              }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = '#2563eb'; e.currentTarget.style.color = '#2563eb'; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = '#e5e7eb'; e.currentTarget.style.color = '#6b7280'; }}
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            <button className="landing-admin-btn" onClick={() => setAdminModalOpen(true)}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
               Admin
             </button>
           </div>
         </header>
 
-        {/* Hero */}
+        {/* ── Hero ────────────────────────────────── */}
         <section className="landing-hero">
-          <div className="landing-hero-badge">AI-Powered Legal Assistance for Women in India</div>
-          <h1 className="landing-hero-title">Know Your Rights.<br />Get Legal Guidance.<br /><span style={{ color: '#2563eb' }}>Take Action.</span></h1>
-          <p className="landing-hero-sub">
-            NyayaSakhiAI is a free AI legal assistant that helps women understand their rights under Indian law —
-            domestic violence, maintenance, custody, dowry, and more. Get instant, confidential guidance backed by
-            actual IPC sections, court precedents, and government resources.
-          </p>
-          <div className="landing-hero-actions">
-            <button className="landing-cta-primary" onClick={() => setGuestModalOpen(true)}>
-              Start Free Consultation
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-            </button>
-            <button className="landing-cta-secondary" onClick={() => { setGuestModalOpen(true); }}>
-              Explore Legal Library
-            </button>
+          {/* Left: Content */}
+          <div className="landing-hero-left">
+            <div className="landing-hero-badge">
+              <span>🛡️</span>
+              India's First Statute-Aligned RAG Legal Companion for Domestic Violence Support
+            </div>
+
+            <h1 className="landing-hero-title">
+              Before the Petition.<br />
+              Know Your Legal Remedies.<br />
+              <span className="accent">Speak with SWATI.</span>
+            </h1>
+
+            <p className="landing-hero-sub">
+              NyayaSakhi–SWATI is a pre-litigation AI legal companion conceptualized and developed by{' '}
+              <strong>Dipali Awasekar</strong> to help women understand their possible legal remedies
+              under the Protection of Women from Domestic Violence Act, 2005. Powered by
+              statute-aligned legal intelligence, it provides simple, confidential, and case-specific
+              guidance before approaching court.
+            </p>
+
+            <div className="landing-hero-actions">
+              <button id="hero-chat-btn" className="landing-cta-primary" onClick={() => setGuestModalOpen(true)}>
+                💬 Chat with SWATI →
+              </button>
+              <button id="hero-explore-btn" className="landing-cta-secondary"
+                onClick={() => { setShowLanding(false); setActiveTab('Legal library'); }}>
+                📖 Explore Legal Resources
+              </button>
+            </div>
+
+            <div className="landing-trust-badges">
+              <div className="landing-trust-item">🛡️ 100% Confidential</div>
+              <div className="landing-trust-sep" />
+              <div className="landing-trust-item">🔒 Secure &amp; Private</div>
+              <div className="landing-trust-sep" />
+              <div className="landing-trust-item">👤 No Sign-up Required</div>
+            </div>
+          </div>
+
+          {/* Right: Hero Image */}
+          <div className="landing-hero-right">
+            <img
+              src="/hero-woman.png"
+              alt="NyayaSakhi SWATI — AI Legal Companion"
+              className="landing-hero-img"
+              onError={e => { e.target.style.display = 'none'; }}
+            />
+            <div className="landing-hero-card">
+              <div className="landing-hero-card-icon">⚖️</div>
+              <div className="landing-hero-card-title">Guidance Backed by Law. Built for You.</div>
+              <div className="landing-hero-card-sub">Empowering women with knowledge, privacy and justice.</div>
+            </div>
           </div>
         </section>
 
-        {/* Stats */}
-        <section className="landing-stats">
+        {/* ── Feature Cards Row ────────────────────── */}
+        <section className="landing-features-row">
           {[
-            { n: '10+', l: 'Indian Laws Covered' },
-            { n: '6', l: 'Languages Supported' },
-            { n: '24/7', l: 'Available Anytime' },
-            { n: '100%', l: 'Free & Confidential' },
-          ].map((s, i) => (
-            <div key={i} className="landing-stat-card">
-              <div className="landing-stat-num">{s.n}</div>
-              <div className="landing-stat-label">{s.l}</div>
+            { icon: '⚖️', color: 'pink',  title: 'PWDVA 2005', sub: 'Statute-Aligned Guidance', desc: 'Information and remedies aligned with the Protection of Women from Domestic Violence Act, 2005.' },
+            { icon: '📋', color: 'rose',  title: 'Sections 18–22', sub: 'Relief Prediction', desc: 'Get clarity on possible legal remedies available under Sections 18 to 22 of the Act.' },
+            { icon: '🕐', color: 'blush', title: '24/7', sub: 'Private Legal Support', desc: 'Available anytime, anywhere. Your privacy is protected with end-to-end confidentiality.' },
+            { icon: '🔬', color: 'mauve', title: 'RAG + LAMP²', sub: 'Research-Backed AI', desc: 'Built on Retrieval-Augmented Generation with LAMP² for accurate, verifiable and up-to-date legal guidance.' },
+          ].map((fc, i) => (
+            <div key={i} className="landing-feat-card">
+              <div className={`landing-feat-icon-wrap ${fc.color}`}>{fc.icon}</div>
+              <div className="landing-feat-title">{fc.title}</div>
+              <div className="landing-feat-sub">{fc.sub}</div>
+              <div className="landing-feat-desc">{fc.desc}</div>
             </div>
           ))}
         </section>
 
-        {/* Features */}
-        <section className="landing-features">
-          <h2 className="landing-section-title">How NyayaSakhiAI Helps</h2>
-          <div className="landing-features-grid">
-            {[
-              { icon: '⚖️', title: 'Case Analysis', desc: 'Describe your situation and get a complete legal analysis — applicable acts, IPC sections, predicted outcomes, and recommended next steps.' },
-              { icon: '📋', title: 'Legal Documents', desc: 'AI-generated case summaries, evidence checklists, Protection Order applications (Form I), and maintenance claim guides — ready to download.' },
-              { icon: '📚', title: 'Legal Library', desc: '10 major Indian laws explained in plain language — PWDVA, IPC 498A, CrPC 125, Dowry Prohibition Act, POSH Act, and more with official govt links.' },
-              { icon: '🔮', title: 'Duration Prediction', desc: 'Based on analysis of similar court cases, get a predicted timeline for your case including factors that may speed up or delay proceedings.' },
-              { icon: '🌐', title: 'Multilingual', desc: 'Available in English, Hindi, Marathi, Tamil, Bengali, and Telugu. Speak in your language and get guidance you can understand.' },
-              { icon: '🔒', title: 'Private & Secure', desc: 'Your conversations are confidential. No personal data is stored or shared. Designed to be a safe space for women seeking help.' },
-            ].map((f, i) => (
-              <div key={i} className="landing-feature-card">
-                <div className="landing-feature-icon">{f.icon}</div>
-                <h3>{f.title}</h3>
-                <p>{f.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Laws covered */}
-        <section className="landing-laws">
-          <h2 className="landing-section-title">Laws & Acts Covered</h2>
-          <div className="landing-laws-grid">
-            {['PWDVA 2005', 'IPC §498A', 'CrPC §125', 'Dowry Prohibition Act', 'Hindu Succession Act', 'POSH Act 2013', 'IT Act — Cyber Crimes', 'Hindu Marriage Act', 'Child Custody (HMGA)', 'BNS 2023'].map((law, i) => (
-              <div key={i} className="landing-law-chip">{law}</div>
-            ))}
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="landing-bottom-cta">
-          <h2>Ready to understand your legal rights?</h2>
-          <p>Start a free, confidential consultation with NyayaSakhiAI right now.</p>
-          <button className="landing-cta-primary" onClick={() => setGuestModalOpen(true)}>
-            Start Consultation
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-        </section>
-
-        {/* Footer */}
+        {/* ── Footer ──────────────────────────────── */}
         <footer className="landing-footer">
-          <span>NyayaSakhiAI — AI Legal Assistant for Women</span>
-          <span>Built with care for Indian women's safety and justice</span>
+          <div className="landing-footer-left">
+            <span>👤 Developed by <strong style={{ color: '#ad1457' }}>Dipali Awasekar</strong></span>
+            <div className="landing-footer-sep" />
+            <span>Legal AI Researcher</span>
+            <div className="landing-footer-sep" />
+            <span>NyayaSakhi–SWATI Project</span>
+          </div>
+          <div className="landing-footer-quote">
+            ❝ Knowledge is Strength. Justice is Your Right. ❞
+          </div>
         </footer>
 
-        {/* Admin Modal (shared) */}
+        {/* ── Admin Login Modal ────────────────────── */}
         {adminModalOpen && (
           <div style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999,
+            position: 'fixed', inset: 0, background: 'rgba(26,10,16,0.55)', zIndex: 9999,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backdropFilter: 'blur(6px)',
           }} onClick={(e) => { if (e.target === e.currentTarget) setAdminModalOpen(false); }}>
             <div style={{
-              background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '32px',
-              width: 360, maxWidth: '95vw', boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+              background: '#fff', border: '1.5px solid #f8bbd0', borderRadius: 16, padding: '32px',
+              width: 380, maxWidth: '95vw', boxShadow: '0 24px 64px rgba(194,24,91,0.18)',
             }}>
-              <div style={{ marginBottom: 20 }}>
-                <div style={{ fontSize: 16, fontWeight: 700, color: '#111' }}>Admin Login</div>
-                <div style={{ fontSize: 12, color: '#999', marginTop: 4 }}>Sign in to access the admin dashboard</div>
+              <div style={{ textAlign: 'center', marginBottom: 22 }}>
+                <div style={{ fontSize: 28, marginBottom: 6 }}>🔐</div>
+                <div style={{ fontSize: 17, fontWeight: 800, color: '#880e4f' }}>Admin Login</div>
+                <div style={{ fontSize: 12, color: '#c490a4', marginTop: 4 }}>Sign in to access the admin dashboard</div>
               </div>
               <div style={{ marginBottom: 14 }}>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Email</label>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#5c2a40', marginBottom: 5 }}>Email</label>
                 <input type="email" value={adminEmail} onChange={e => setAdminEmail(e.target.value)}
                   placeholder="admin@example.com"
-                  style={{ width: '100%', padding: '8px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
-                  onKeyDown={e => e.key === 'Enter' && document.getElementById('admin-pass-input-l')?.focus()}
-                />
+                  style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #f5c6d8', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                  onFocus={e => e.target.style.borderColor = '#c2185b'} onBlur={e => e.target.style.borderColor = '#f5c6d8'}
+                  onKeyDown={e => e.key === 'Enter' && document.getElementById('admin-pass-input-l')?.focus()} />
               </div>
               <div style={{ marginBottom: 16 }}>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Password</label>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#5c2a40', marginBottom: 5 }}>Password</label>
                 <input id="admin-pass-input-l" type="password" value={adminPass} onChange={e => setAdminPass(e.target.value)}
                   placeholder="Enter password"
-                  style={{ width: '100%', padding: '8px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 13, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
-                  onKeyDown={e => e.key === 'Enter' && adminLogin()}
-                />
+                  style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #f5c6d8', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                  onFocus={e => e.target.style.borderColor = '#c2185b'} onBlur={e => e.target.style.borderColor = '#f5c6d8'}
+                  onKeyDown={e => e.key === 'Enter' && adminLogin()} />
               </div>
               {adminError && (
-                <div style={{ padding: '8px 12px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, fontSize: 12, color: '#dc2626', marginBottom: 12 }}>{adminError}</div>
+                <div style={{ padding: '9px 12px', background: '#fff0f3', border: '1px solid #f9b8cb', borderRadius: 10, fontSize: 13, color: '#c2185b', marginBottom: 14 }}>{adminError}</div>
               )}
               <button onClick={adminLogin} disabled={adminLoading}
-                style={{ width: '100%', padding: '10px', borderRadius: 8, background: '#111', color: '#fff', fontWeight: 600, fontSize: 13, border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
-                {adminLoading ? 'Signing in...' : 'Sign in to Dashboard'}
+                style={{ width: '100%', padding: '12px', borderRadius: 10, background: 'linear-gradient(135deg,#c2185b,#880e4f)', color: '#fff', fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit', boxShadow: '0 4px 14px rgba(194,24,91,0.28)' }}>
+                {adminLoading ? 'Signing in…' : 'Sign in to Dashboard'}
               </button>
-              <div style={{ textAlign: 'center', marginTop: 12 }}>
+              <div style={{ textAlign: 'center', marginTop: 14 }}>
                 <button onClick={() => setAdminModalOpen(false)}
-                  style={{ background: 'none', border: 'none', fontSize: 12, color: '#999', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+                  style={{ background: 'none', border: 'none', fontSize: 13, color: '#c490a4', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
               </div>
             </div>
           </div>
         )}
 
-        {/* Guest Registration Modal */}
+        {/* Guest Registration Modal — SWATI Welcome */}
         {guestModalOpen && (
           <div style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 9999,
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)', zIndex: 9999,
             display: 'flex', alignItems: 'center', justifyContent: 'center',
+            backdropFilter: 'blur(4px)',
           }} onClick={(e) => { if (e.target === e.currentTarget) setGuestModalOpen(false); }}>
             <div style={{
-              background: '#fff', border: '1px solid #e5e7eb', borderRadius: 12, padding: '32px',
-              width: 380, maxWidth: '95vw', boxShadow: '0 20px 60px rgba(0,0,0,0.15)',
+              background: '#fff', border: '1px solid #e5e7eb', borderRadius: 16, padding: '36px 32px 28px',
+              width: 420, maxWidth: '95vw', boxShadow: '0 24px 64px rgba(0,0,0,0.18)',
+              display: 'flex', flexDirection: 'column', gap: 0,
             }}>
-              <div style={{ marginBottom: 20 }}>
-                <div style={{ fontSize: 18, fontWeight: 700, color: '#111' }}>Get Started</div>
-                <div style={{ fontSize: 13, color: '#666', marginTop: 4 }}>Tell us a bit about yourself so NyayaSakhiAI can assist you better. Your info is confidential.</div>
+              {/* SWATI header */}
+              <div style={{ textAlign: 'center', marginBottom: 22 }}>
+                <div style={{ fontSize: 36, marginBottom: 8 }}>🌸</div>
+                <div style={{ fontSize: 20, fontWeight: 800, color: '#111', letterSpacing: '-0.02em', marginBottom: 6 }}>
+                  Welcome to SWATI
+                </div>
+                <div style={{ fontSize: 13, color: '#6b7280', lineHeight: 1.6, maxWidth: 320, margin: '0 auto' }}>
+                  I'm here to help you understand your legal rights and possible remedies under the law.
+                  Please share a few details so I can guide you better. <strong style={{ color: '#374151' }}>Your information remains private and confidential.</strong>
+                </div>
               </div>
+
+              {/* Name */}
               <div style={{ marginBottom: 14 }}>
-                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Your Name / Alias</label>
+                <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>
+                  What should I call you?
+                </label>
                 <input type="text" value={guestName} onChange={e => setGuestName(e.target.value)}
-                  placeholder="How should we address you?"
-                  style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                  placeholder="Enter your name or a preferred name"
+                  style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #e5e7eb', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.15s' }}
+                  onFocus={e => e.target.style.borderColor = '#2563eb'}
+                  onBlur={e => e.target.style.borderColor = '#e5e7eb'}
                   onKeyDown={e => e.key === 'Enter' && document.getElementById('g-age')?.focus()}
                 />
               </div>
-              <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
-                <div style={{ width: '70px' }}>
+
+              {/* Age + State + City */}
+              <div style={{ display: 'flex', gap: 10, marginBottom: 18 }}>
+                <div style={{ width: '80px', flexShrink: 0 }}>
                   <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>Age</label>
                   <input id="g-age" type="number" value={guestAge} onChange={e => setGuestAge(e.target.value)}
-                    placeholder="28" min="10" max="120"
-                    style={{ width: '100%', padding: '10px 8px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box' }}
+                    placeholder="—" min="10" max="120"
+                    style={{ width: '100%', padding: '10px 8px', border: '1.5px solid #e5e7eb', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', transition: 'border-color 0.15s', textAlign: 'center' }}
+                    onFocus={e => e.target.style.borderColor = '#2563eb'}
+                    onBlur={e => e.target.style.borderColor = '#e5e7eb'}
                     onKeyDown={e => e.key === 'Enter' && document.getElementById('g-state')?.focus()}
                   />
                 </div>
@@ -942,14 +974,17 @@ export default function App() {
                     <>
                       <div style={{ flex: 1 }}>
                         <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>State</label>
-                        <select id="g-state" value={guestState} onChange={e => { setGuestState(e.target.value); setGuestCity(''); }} style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', appearance: 'none', background: '#fff' }}>
+                        <select id="g-state" value={guestState} onChange={e => { setGuestState(e.target.value); setGuestCity(''); }} style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #e5e7eb', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', appearance: 'none', background: '#fff', transition: 'border-color 0.15s' }}
+                          onFocus={e => e.target.style.borderColor = '#2563eb'} onBlur={e => e.target.style.borderColor = '#e5e7eb'}>
                           <option value="" disabled>Select State</option>
                           {Object.keys(indiaLocations).map(st => <option key={st} value={st}>{st}</option>)}
                         </select>
                       </div>
                       <div style={{ flex: 1 }}>
                         <label style={{ display: 'block', fontSize: 12, fontWeight: 600, color: '#555', marginBottom: 5 }}>City</label>
-                        <select id="g-city" value={guestCity} onChange={e => setGuestCity(e.target.value)} disabled={!guestState} style={{ width: '100%', padding: '10px 12px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', appearance: 'none', background: guestState ? '#fff' : '#f9fafb', color: guestState ? '#000' : '#9ca3af' }} onKeyDown={e => e.key === 'Enter' && guestLogin()}>
+                        <select id="g-city" value={guestCity} onChange={e => setGuestCity(e.target.value)} disabled={!guestState} style={{ width: '100%', padding: '10px 12px', border: '1.5px solid #e5e7eb', borderRadius: 10, fontSize: 14, fontFamily: 'inherit', outline: 'none', boxSizing: 'border-box', appearance: 'none', background: guestState ? '#fff' : '#f9fafb', color: guestState ? '#000' : '#9ca3af', transition: 'border-color 0.15s' }}
+                          onFocus={e => e.target.style.borderColor = '#2563eb'} onBlur={e => e.target.style.borderColor = '#e5e7eb'}
+                          onKeyDown={e => e.key === 'Enter' && guestLogin()}>
                           <option value="" disabled>Select City</option>
                           {guestState && indiaLocations[guestState].map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
@@ -958,16 +993,40 @@ export default function App() {
                   );
                 })()}
               </div>
+
               {guestError && (
-                <div style={{ padding: '10px 12px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 8, fontSize: 13, color: '#dc2626', marginBottom: 16 }}>{guestError}</div>
+                <div style={{ padding: '10px 12px', background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 10, fontSize: 13, color: '#dc2626', marginBottom: 16 }}>{guestError}</div>
               )}
-              <button onClick={guestLogin} disabled={guestLoading}
-                style={{ width: '100%', padding: '12px', borderRadius: 8, background: '#2563eb', color: '#fff', fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: 'inherit', transition: 'background 0.2s' }}>
-                {guestLoading ? 'Starting...' : 'Start Consultation'}
+
+              {/* CTA button */}
+              <button
+                id="swati-begin-btn"
+                onClick={guestLogin}
+                disabled={guestLoading}
+                style={{
+                  width: '100%', padding: '13px', borderRadius: 10,
+                  background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                  color: '#fff', fontWeight: 700, fontSize: 14.5,
+                  border: 'none', cursor: 'pointer', fontFamily: 'inherit',
+                  boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
+                  transition: 'all 0.2s', letterSpacing: '-0.01em',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #1d4ed8, #1e40af)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #2563eb, #1d4ed8)'; e.currentTarget.style.transform = 'none'; }}
+              >
+                {guestLoading ? 'Starting…' : 'Begin My Consultation'}
               </button>
+
+              {/* Maybe Later link */}
               <div style={{ textAlign: 'center', marginTop: 14 }}>
-                <button onClick={() => setGuestModalOpen(false)}
-                  style={{ background: 'none', border: 'none', fontSize: 13, color: '#999', cursor: 'pointer', fontFamily: 'inherit' }}>Cancel</button>
+                <button
+                  onClick={() => setGuestModalOpen(false)}
+                  style={{ background: 'none', border: 'none', fontSize: 13, color: '#9ca3af', cursor: 'pointer', fontFamily: 'inherit', textDecoration: 'underline', textDecorationColor: 'transparent', transition: 'color 0.15s, text-decoration-color 0.15s' }}
+                  onMouseEnter={e => { e.currentTarget.style.color = '#6b7280'; e.currentTarget.style.textDecorationColor = '#6b7280'; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = '#9ca3af'; e.currentTarget.style.textDecorationColor = 'transparent'; }}
+                >
+                  Maybe Later
+                </button>
               </div>
             </div>
           </div>
@@ -1105,43 +1164,46 @@ export default function App() {
         {activeTab === 'Conversations' && (
           <div className="chat-viewport">
 
-            {/* Messages */}
-            <div className="messages-area">
-              <div className="messages-inner">
-                {error && <div className="error-bar">⚠ {error}</div>}
+            {/* Chat body: messages + sources side by side */}
+            <div className="chat-body">
 
-                {/* Welcome screen */}
-                {showWelcome && (
-                  <div className="welcome-screen">
-                    <h2 className="welcome-heading">How NyayaSakhiAI Can Help</h2>
-                    <div className="feature-grid">
-                      {[
-                        { c: 'teal', icon: '💬', title: 'Start with a conversation', desc: 'Describe your situation freely. I\'ll listen, ask the right questions, and guide you step by step through your legal options.', prompt: 'I need legal help with my situation' },
-                        { c: 'yellow', icon: '📂', title: 'Get a full legal analysis', desc: 'After gathering key facts, I generate a complete legal analysis — predicted outcomes, timelines, and recommended next steps.', prompt: null },
-                        { c: 'purple', icon: '⚖️', title: 'Explore the legal library', desc: 'Every answer is backed by Indian laws, IPC sections and court precedents — all viewable in the Sources panel next to your chat.', prompt: null },
-                        { c: 'blue', icon: '📋', title: 'View case documents', desc: 'Access AI-generated case summaries, evidence checklists, complaint templates, and court application formats.', prompt: null },
-                      ].map((fc, i) => (
-                        <div key={i} className={`feature-card ${fc.c}`} onClick={fc.prompt ? () => send(fc.prompt) : () => setActiveTab(i === 2 ? 'Legal library' : i === 3 ? 'My documents' : 'Conversations')}>
-                          <div className="feature-card-icon">{fc.icon}</div>
-                          <div className="feature-card-title">{fc.title}</div>
-                          <div className="feature-card-desc">{fc.desc}</div>
-                        </div>
-                      ))}
+              {/* Messages */}
+              <div className="messages-area">
+                <div className="messages-inner">
+                  {error && <div className="error-bar">⚠ {error}</div>}
+
+                  {/* Welcome screen */}
+                  {showWelcome && (
+                    <div className="welcome-screen">
+                      <h2 className="welcome-heading">How NyayaSakhi–SWATI Can Help</h2>
+                      <div className="feature-grid">
+                        {[
+                          { c: 'teal', icon: '💬', title: 'Narrate Your Situation', desc: 'Share your experience confidentially. SWATI transforms your narrative into a structured legal case representation aligned with domestic violence law.', prompt: 'I need legal help with my situation' },
+                          { c: 'yellow', icon: '🧠', title: 'Predict Possible Legal Remedies', desc: 'Powered by the LAMP² framework and Statute-Aligned Legal Relief Prediction (SALRP), SWATI identifies possible remedies under Sections 18–22 of the PWDVA, 2005.', prompt: null },
+                          { c: 'purple', icon: '📚', title: 'Access Research-Backed Legal Resources', desc: 'Explore laws, precedents, statutory provisions, and legal explanations retrieved through a Retrieval-Augmented Generation (RAG) framework.', prompt: null },
+                          { c: 'blue', icon: '📄', title: 'Build Your Case File', desc: 'Generate organized case summaries, supporting-document checklists, evidence trackers, and legal application drafts for informed decision-making.', prompt: null },
+                        ].map((fc, i) => (
+                          <div key={i} className={`feature-card ${fc.c}`} onClick={fc.prompt ? () => send(fc.prompt) : () => setActiveTab(i === 2 ? 'Legal library' : i === 3 ? 'My documents' : 'Conversations')}>
+                            <div className="feature-card-icon">{fc.icon}</div>
+                            <div className="feature-card-title">{fc.title}</div>
+                            <div className="feature-card-desc">{fc.desc}</div>
+                          </div>
+                        ))}
+                      </div>
+                      <p className="quick-prompts-label">Common situations</p>
+                      <div className="quick-prompts">
+                        {[
+                          'I am facing domestic violence at home',
+                          'My husband is demanding dowry',
+                          'I need help with divorce and custody',
+                          'I want to file an FIR against harassment',
+                          'I need maintenance from my husband',
+                        ].map(p => (
+                          <button key={p} className="quick-prompt-btn" onClick={() => send(p)}>{p}</button>
+                        ))}
+                      </div>
                     </div>
-                    <p className="quick-prompts-label">Common situations</p>
-                    <div className="quick-prompts">
-                      {[
-                        'I am facing domestic violence at home',
-                        'My husband is demanding dowry',
-                        'I need help with divorce and custody',
-                        'I want to file an FIR against harassment',
-                        'I need maintenance from my husband',
-                      ].map(p => (
-                        <button key={p} className="quick-prompt-btn" onClick={() => send(p)}>{p}</button>
-                      ))}
-                    </div>
-                  </div>
-                )}
+                  )}
 
                 {/* Messages */}
                 {!showWelcome && (
@@ -1431,9 +1493,10 @@ export default function App() {
               </aside>
             )}
           </div>
+        </div>
         )}
 
-        {/* Composer — redesigned with language selector */}
+
         {activeTab === 'Conversations' && (
           <div className="composer-wrap no-print">
             <div className="composer">
