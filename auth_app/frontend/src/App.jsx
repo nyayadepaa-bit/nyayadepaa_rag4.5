@@ -735,7 +735,7 @@ export default function App() {
         {/* ── Header ─────────────────────────────── */}
         <header className="landing-header">
           <div className="landing-header-left">
-            <div className="landing-brand-logo">🌸</div>
+            <img src="/hero-woman-new.jpg" alt="Logo" className="landing-brand-logo" style={{ objectFit: 'cover', objectPosition: 'top', padding: 0 }} />
             <div className="landing-brand-text">
               <span className="landing-brand-name">NyayaSakhi</span>
               <span className="landing-brand-sub">AI Legal Companion by Dipali Awasekar</span>
@@ -806,7 +806,7 @@ export default function App() {
             <img
               src="/hero-woman-new.jpg"
               alt="NyayaSakhi SWATI — AI Legal Companion"
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', maskImage: 'radial-gradient(ellipse 80% 80% at 50% 40%, black 50%, transparent 100%)', WebkitMaskImage: 'radial-gradient(ellipse 80% 80% at 50% 40%, black 50%, transparent 100%)' }}
+              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }}
               onError={e => { e.target.style.display = 'none'; }}
             />
             <div className="landing-hero-card">
