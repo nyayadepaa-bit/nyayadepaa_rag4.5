@@ -3221,6 +3221,7 @@ body {
     justify-content: flex-start;
     padding: 4px 0 2px;
     width: 100%;
+    flex: 0 0 100%;
     order: 3;
     border-top: 1px solid rgba(0,0,0,0.03);
     margin-top: 4px;
