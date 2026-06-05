@@ -1461,7 +1461,7 @@ export default function App() {
 
                     {loading && (
                       <div className="msg-row bot-row no-print">
-                        <div className="msg-avatar bot"><img src="/bot-logo.png" alt="Bot" /></div>
+                        <div className="msg-avatar bot"><img src="/hero-woman-transparent.png" alt="Bot" style={{ backgroundColor: '#fff' }} /></div>
                         <div className="msg-body">
                           <div className="typing-bubble"><span /><span /><span /></div>
                         </div>
