@@ -2857,6 +2857,7 @@ body {
   align-items: stretch;
   min-height: calc(100vh - 68px);
   max-height: 800px;
+  background: linear-gradient(135deg, #fff8fb 0%, #fce4ec 55%, #f8bbd0 100%);
 }
 
 .landing-hero-left {
@@ -2865,7 +2866,7 @@ body {
   flex-direction: column;
   justify-content: center;
   gap: 0;
-  background: linear-gradient(145deg, #fff8fb 0%, #fce4ec 100%);
+  background: transparent;
 }
 
 .landing-hero-badge {
@@ -2986,7 +2987,7 @@ body {
 .landing-hero-right {
   position: relative;
   overflow: hidden;
-  background: #fff;
+  background: transparent;
 }
 
 .landing-hero-img {
