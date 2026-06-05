@@ -85,6 +85,7 @@ body {
   background: var(--bg);
   color: var(--text);
   height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
   font-size: 14px;
@@ -115,6 +116,7 @@ body {
 .app-shell {
   display: flex;
   height: 100vh;
+  height: 100dvh;
   width: 100vw;
   overflow: hidden;
   background: var(--bg);
@@ -3203,16 +3205,28 @@ body {
   .mobile-only { display: inherit !important; }
   .top-nav-brand.mobile-only { display: flex !important; }
   
-  .top-nav { padding: 0 8px; }
+  .top-nav {
+    height: auto;
+    padding: 6px 8px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .top-nav-left { order: 1; }
+  .top-nav-right { order: 2; }
+  
   .top-nav-center {
     display: flex;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     justify-content: flex-start;
-    padding-bottom: 2px;
+    padding: 4px 0 2px;
+    width: 100%;
+    order: 3;
+    border-top: 1px solid rgba(0,0,0,0.03);
+    margin-top: 4px;
   }
   .top-nav-center::-webkit-scrollbar { display: none; }
-  .nav-tab { padding: 6px 10px; font-size: 12px; white-space: nowrap; }
+  .nav-tab { padding: 6px 12px; font-size: 12.5px; white-space: nowrap; }
   
   .top-nav-right .nav-export-btn { display: none; } /* Hide export on mobile */
 
