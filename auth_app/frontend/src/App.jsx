@@ -1137,7 +1137,10 @@ export default function App() {
               </button>
             )}
             {messages.length >= 2 && (
-              <button className="nav-export-btn no-print" onClick={() => window.print()}>↓ Export PDF</button>
+              <button className="nav-export-btn no-print" onClick={() => window.print()}>
+                <span className="desktop-only">↓ Export PDF</span>
+                <span className="mobile-only" style={{ display: 'none' /* overridden by CSS on mobile */ }}>↓ PDF</span>
+              </button>
             )}
             <button
               onClick={() => setAdminModalOpen(true)}

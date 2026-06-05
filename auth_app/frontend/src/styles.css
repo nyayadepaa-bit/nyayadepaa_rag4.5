@@ -3228,8 +3228,6 @@ body {
   }
   .top-nav-center::-webkit-scrollbar { display: none; }
   .nav-tab { padding: 6px 8px; font-size: 11.5px; white-space: nowrap; }
-  
-  .top-nav-right .nav-export-btn { display: none; } /* Hide export on mobile */
 
   .app-sidebar {
     position: fixed;
