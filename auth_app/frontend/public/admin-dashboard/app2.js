@@ -91,35 +91,76 @@ async function loadActivity(pg = 1) {
 
 /* CONVERSATIONS */
 let cQ = '';
+let cvRefreshTimer = null;
+
 async function loadConversations(pg = 1) {
   const c = $('#pg-conversations');
   c.innerHTML = `<div class="tbl-wrap"><div class="tbl-bar">
     <div class="tbl-search"><input id="cv-q" placeholder="Search user..." value="${cQ}" /></div>
+    <button class="btn-sm" onclick="loadConversations(${pg})" style="margin-left:8px">↻ Refresh</button>
     <span class="tbl-count" id="cv-c">—</span></div>
     <div id="cv-b"><div class="loader"><div class="spin-ring"></div>Loading</div></div></div>`;
   $('#cv-q').addEventListener('input', e => { cQ = e.target.value; loadConversations(1); });
+
+  // Auto-refresh every 30 seconds
+  if (cvRefreshTimer) clearInterval(cvRefreshTimer);
+  cvRefreshTimer = setInterval(() => {
+    if ($('#pg-conversations')?.classList.contains('active')) loadConversations(pg);
+    else clearInterval(cvRefreshTimer);
+  }, 30000);
+
   try {
     const d = await api(`/admin/conversations?search=${cQ}&page=${pg}&page_size=20`);
     $('#cv-c').textContent = `${d.total} users`;
-    if (!d.items.length) { $('#cv-b').innerHTML = `<div class="empty">No conversations</div>`; return; }
+    if (!d.items.length) { $('#cv-b').innerHTML = `<div class="empty">No conversations yet</div>`; return; }
     $('#cv-b').innerHTML = `<div style="overflow-x:auto"><table>
-      <thead><tr><th>User</th><th>City</th><th>Messages</th><th>Last active</th><th></th></tr></thead>
+      <thead><tr><th>User</th><th>City</th><th>Messages</th><th>Session ID</th><th>Last active</th><th></th></tr></thead>
       <tbody>${d.items.map(x => `<tr>
         <td><span class="cell-name">${x.user_name}</span><br><span class="cell-mono">${x.user_email}</span></td>
         <td>${x.city||'—'}</td>
-        <td>${x.message_count}</td>
+        <td><span class="tag tag-user">${x.message_count}</span></td>
+        <td><span class="cell-mono" style="font-size:10px;color:#6b7280">${String(x.user_id).slice(0,13)}…</span></td>
         <td>${fmtD(x.last_active)}</td>
-        <td><button class="act" onclick="viewConv('${x.user_id}','${x.user_name}')">View</button></td></tr>`).join('')}</tbody></table></div>`;
+        <td><div class="acts">
+          <button class="act" onclick="viewConv('${x.user_id}','${x.user_name}')">View</button>
+          <button class="act act-danger" onclick="delConv('${x.user_id}','${x.user_name}')">Clear</button>
+        </div></td></tr>`).join('')}
+      </tbody></table></div>
+    <div class="pager"><span>Page ${pg}/${d.pages} — ${d.total} total</span>
+      <div class="pager-btns">
+        <button class="pg" ${pg<=1?'disabled':''} onclick="loadConversations(${pg-1})">‹</button>
+        <button class="pg" ${pg>=d.pages?'disabled':''} onclick="loadConversations(${pg+1})">›</button>
+      </div></div>`;
   } catch (x) { $('#cv-b').innerHTML = `<div class="empty">${x.message}</div>`; }
 }
+
+async function delConv(id, name) {
+  if (!confirm(`Clear all conversations for "${name}"?`)) return;
+  if (demo) { toast(`Cleared conversations for ${name}`); loadConversations(1); return; }
+  try {
+    await api('/admin/conversations/bulk-delete', { method: 'POST', body: JSON.stringify({ user_ids: [id] }) });
+    toast(`Conversations cleared for ${name}`);
+    loadConversations(1);
+  } catch(x) { toast(x.message); }
+}
+
 async function viewConv(id, name) {
   openModal(`${name} — Conversation`, `<div class="loader"><div class="spin-ring"></div>Loading</div>`);
   try {
     const m = await api(`/admin/conversations/${id}?limit=200`);
-    if (!m.length) { $('#modal-c').innerHTML = `<div class="empty">No messages</div>`; return; }
-    $('#modal-c').innerHTML = m.map(x => `<div style="margin-bottom:12px">
-      <div class="msg msg-user"><strong>User:</strong> ${x.input_text||'—'}<div class="msg-ts">${fmtD(x.timestamp)}</div></div>
-      ${x.response_text?`<div class="msg msg-ai"><strong>AI:</strong> ${x.response_text.slice(0,500)}${x.response_text.length>500?'...':''}</div>`:''}</div>`).join('');
+    if (!m.length) { $('#modal-c').innerHTML = `<div class="empty">No messages yet</div>`; return; }
+    $('#modal-c').innerHTML = `
+      <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:11px;color:#6b7280">
+        <strong>User ID:</strong> ${id} &nbsp;|&nbsp; <strong>Total messages:</strong> ${m.length}
+      </div>
+      ${m.map((x, i) => `<div style="margin-bottom:14px;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+        <div style="background:#f3f4f6;padding:5px 12px;font-size:10px;color:#9ca3af;display:flex;justify-content:space-between">
+          <span>Message #${i+1} &nbsp;|&nbsp; Case Query ID: <strong style="color:#374151">${x.id}</strong></span>
+          <span>${fmtD(x.timestamp)}</span>
+        </div>
+        <div class="msg msg-user" style="border-radius:0"><strong>User:</strong> ${x.input_text||'—'}</div>
+        ${x.response_text?`<div class="msg msg-ai" style="border-radius:0;border-top:1px solid #e5e7eb"><strong>AI:</strong> ${x.response_text.slice(0,600)}${x.response_text.length>600?'...':''}</div>`:''}
+      </div>`).join('')}`;
   } catch (x) { $('#modal-c').innerHTML = `<div class="empty">${x.message}</div>`; }
 }
 

@@ -2982,11 +2982,11 @@ body {
   background: #f8bbd0;
 }
 
-/* ── Hero Right (Image) ─────────────── */
+/* ── Hero Right (Image) ─────────────────── */
 .landing-hero-right {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 60%, #fff8fb 100%);
+  background: #fff;
 }
 
 .landing-hero-img {
