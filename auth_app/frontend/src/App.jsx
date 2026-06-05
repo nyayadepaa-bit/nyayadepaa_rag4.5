@@ -745,7 +745,7 @@ export default function App() {
           <nav className="landing-nav">
             {['Home', 'About SWATI', 'Legal Library', 'Laws Covered', 'Resources', 'Contact'].map((item, i) => (
               <button key={item} className={`landing-nav-link${i === 0 ? ' active' : ''}`}
-                onClick={i === 2 ? () => { setShowLanding(false); setActiveTab('Legal library'); } : undefined}>
+                onClick={i === 2 ? () => { setGuestModalOpen(true); } : undefined}>
                 {item}
               </button>
             ))}
@@ -787,7 +787,7 @@ export default function App() {
                 💬 Chat with SWATI →
               </button>
               <button id="hero-explore-btn" className="landing-cta-secondary"
-                onClick={() => { setShowLanding(false); setActiveTab('Legal library'); }}>
+                onClick={() => { setGuestModalOpen(true); }}>
                 📖 Explore Legal Resources
               </button>
             </div>
@@ -802,11 +802,11 @@ export default function App() {
           </div>
 
           {/* Right: Hero Image */}
-          <div className="landing-hero-right">
+          <div className="landing-hero-right" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <img
-              src="/hero-woman.png"
+              src="/bot-logo.png"
               alt="NyayaSakhi SWATI — AI Legal Companion"
-              className="landing-hero-img"
+              style={{ width: '60%', height: 'auto', objectFit: 'contain', mixBlendMode: 'multiply', opacity: 0.9 }}
               onError={e => { e.target.style.display = 'none'; }}
             />
             <div className="landing-hero-card">
@@ -1005,14 +1005,14 @@ export default function App() {
                 disabled={guestLoading}
                 style={{
                   width: '100%', padding: '13px', borderRadius: 10,
-                  background: 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                  background: 'linear-gradient(135deg, #c2185b, #880e4f)',
                   color: '#fff', fontWeight: 700, fontSize: 14.5,
                   border: 'none', cursor: 'pointer', fontFamily: 'inherit',
-                  boxShadow: '0 4px 14px rgba(37,99,235,0.3)',
+                  boxShadow: '0 4px 14px rgba(194,24,91,0.3)',
                   transition: 'all 0.2s', letterSpacing: '-0.01em',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #1d4ed8, #1e40af)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #2563eb, #1d4ed8)'; e.currentTarget.style.transform = 'none'; }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #880e4f, #5c2a40)'; e.currentTarget.style.transform = 'translateY(-1px)'; }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'linear-gradient(135deg, #c2185b, #880e4f)'; e.currentTarget.style.transform = 'none'; }}
               >
                 {guestLoading ? 'Starting…' : 'Begin My Consultation'}
               </button>
@@ -1041,9 +1041,9 @@ export default function App() {
       {/* ── Sidebar ───────────────────────────── */}
       <aside className={`app-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="sidebar-top">
-          <div className="sidebar-brand">
-            <img src="/bot-logo.png" alt="NyayaSakhiAI" />
-            <span className="sidebar-brand-name">NyayaSakhiAI</span>
+          <div className="sidebar-brand" onClick={() => setShowLanding(true)} style={{ cursor: 'pointer' }}>
+            <img src="/bot-logo.png" alt="NyayaSakhi" />
+            <span className="sidebar-brand-name">NyayaSakhi</span>
           </div>
           <button className="new-conv-btn" onClick={resetChat}>+ New conversation</button>
         </div>
