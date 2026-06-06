@@ -2,6 +2,14 @@
   "buildCommand": "cd auth_app/frontend && npm install && npm run build",
   "outputDirectory": "auth_app/frontend/dist",
   "framework": "vite",
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "nyayadepaaai.vercel.app" }],
+      "destination": "https://lampp.in/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/api/:path*",
