@@ -346,18 +346,19 @@ function MyDocumentsTab({ switchToLibrary, messages, caseSummaryId }) {
 
   const allDocs = dynamicDocs.length > 0 ? [...dynamicDocs, ...MY_DOCUMENTS.slice(2)] : MY_DOCUMENTS;
   const [selected, setSelected] = useState(allDocs[0]);
+  const [listOpen, setListOpen] = useState(false);
 
   return (
-    <div style={{ display: 'flex', flex: 1, overflow: 'hidden', height: '100%' }}>
+    <div className="split-pane">
       {/* Left list */}
-      <div style={{ width: 260, flexShrink: 0, borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', background: 'var(--bg-sidebar)', overflow: 'hidden' }}>
+      <div className={`split-list ${listOpen ? 'open' : ''}`}>
         <div style={{ padding: '14px 14px 10px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 2 }}>My Documents</div>
           <div style={{ fontSize: 11, color: 'var(--text-muted)' }}>{fr ? `${dynamicDocs.length} AI reports + templates` : 'Templates, guides & resources'}</div>
         </div>
         <div style={{ flex: 1, overflowY: 'auto' }}>
           {allDocs.map(doc => (
-            <div key={doc.id} onClick={() => setSelected(doc)} style={{ padding: '10px 14px', cursor: 'pointer', borderBottom: '1px solid rgba(0,0,0,0.04)', background: selected?.id === doc.id ? 'var(--bg-white)' : 'transparent', transition: 'background 0.12s' }}>
+            <div key={doc.id} onClick={() => { setSelected(doc); setListOpen(false); }} style={{ padding: '10px 14px', cursor: 'pointer', borderBottom: '1px solid rgba(0,0,0,0.04)', background: selected?.id === doc.id ? 'var(--bg-white)' : 'transparent', transition: 'background 0.12s' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 3 }}>
                 <ActBadge abbr={doc.abbr} color={doc.color} />
                 <span style={{ fontSize: 12.5, fontWeight: 600, color: 'var(--text)', lineHeight: 1.3 }}>{doc.title}</span>
@@ -369,7 +370,11 @@ function MyDocumentsTab({ switchToLibrary, messages, caseSummaryId }) {
       </div>
 
       {/* Right content */}
-      <div style={{ flex: 1, overflowY: 'auto', padding: '28px 32px', background: 'var(--bg)' }}>
+      <div className="split-detail">
+        <button className="split-menu-btn" onClick={() => setListOpen(true)}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          Documents List
+        </button>
         {selected && (
           <>
             <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
@@ -419,6 +424,9 @@ function MyDocumentsTab({ switchToLibrary, messages, caseSummaryId }) {
           </>
         )}
       </div>
+
+      {/* Overlay */}
+      {listOpen && <div className="sidebar-overlay" onClick={() => setListOpen(false)} />}
     </div>
   );
 }
@@ -427,13 +435,14 @@ function MyDocumentsTab({ switchToLibrary, messages, caseSummaryId }) {
 function LegalLibraryTab() {
   const [query, setQuery] = useState('');
   const [selected, setSelected] = useState(LEGAL_LIBRARY[0]);
+  const [listOpen, setListOpen] = useState(false);
   const filtered = LEGAL_LIBRARY.filter(l =>
     !query || l.title.toLowerCase().includes(query.toLowerCase()) || l.desc.toLowerCase().includes(query.toLowerCase())
   );
   return (
-    <div style={{ display: 'flex', flex: 1, overflow: 'hidden', height: '100%' }}>
+    <div className="split-pane">
       {/* Left list */}
-      <div style={{ width: 290, flexShrink: 0, borderRight: '1px solid var(--border)', display: 'flex', flexDirection: 'column', background: 'var(--bg-sidebar)', overflow: 'hidden' }}>
+      <div className={`split-list ${listOpen ? 'open' : ''}`}>
         <div style={{ padding: '12px 14px', borderBottom: '1px solid var(--border)' }}>
           <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Legal Library</div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, background: 'var(--bg-white)', border: '1px solid var(--border)', borderRadius: 8, padding: '6px 10px' }}>
@@ -444,7 +453,7 @@ function LegalLibraryTab() {
         </div>
         <div style={{ flex: 1, overflowY: 'auto' }}>
           {filtered.map(law => (
-            <div key={law.id} onClick={() => setSelected(law)}
+            <div key={law.id} onClick={() => { setSelected(law); setListOpen(false); }}
               style={{ padding: '10px 14px', cursor: 'pointer', borderBottom: '1px solid rgba(0,0,0,0.04)', background: selected?.id === law.id ? 'var(--bg-white)' : 'transparent', transition: 'background 0.12s' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 3 }}>
                 <ActBadge abbr={law.abbr} color={law.color} />
@@ -457,8 +466,12 @@ function LegalLibraryTab() {
       </div>
 
       {/* Right detail */}
-      {selected && (
-        <div style={{ flex: 1, overflowY: 'auto', padding: '28px 32px', background: 'var(--bg)' }}>
+      <div className="split-detail">
+        <button className="split-menu-btn" onClick={() => setListOpen(true)}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          Library Index
+        </button>
+        {selected && (
           {/* Header */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 20 }}>
             <ActBadge abbr={selected.abbr} color={selected.color} />
@@ -513,8 +526,11 @@ function LegalLibraryTab() {
               </a>
             ))}
           </div>
-        </div>
-      )}
+        )}
+      </div>
+
+      {/* Overlay */}
+      {listOpen && <div className="sidebar-overlay" onClick={() => setListOpen(false)} />}
     </div>
   );
 }

@@ -2551,6 +2551,71 @@ body {
   gap: 22px
 }
 
+/* ── Split Layout for My Documents & Legal Library ── */
+.split-pane {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+  position: relative;
+}
+
+.split-list {
+  width: 290px;
+  flex-shrink: 0;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-sidebar);
+  overflow: hidden;
+  transition: transform 0.2s ease-out;
+}
+
+.split-detail {
+  flex: 1;
+  overflow-y: auto;
+  padding: 28px 32px;
+  background: var(--bg);
+}
+
+.split-menu-btn {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--bg-white);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-xs);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .split-list {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    width: 280px;
+    transform: translateX(-100%);
+    box-shadow: var(--shadow-md);
+  }
+  .split-list.open {
+    transform: translateX(0);
+  }
+  .split-detail {
+    padding: 16px;
+  }
+  .split-menu-btn {
+    display: inline-flex;
+  }
+}
+
 .tab-page-hdr {
   display: flex;
   align-items: flex-start;
