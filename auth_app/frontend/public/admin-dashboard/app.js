@@ -143,7 +143,7 @@ function renderApp() {
     ${!hasAccess ? `<div id="login-screen">
       <div class="login-card">
         <div class="login-header"><h1>NyayaDepaaAI Admin</h1><p>Access restricted. Log in from the main bot page.</p></div>
-        <a href="/" class="btn-primary" style="display:block;text-align:center;text-decoration:none;color:#fff">Go to NyayaSakhiAI Bot</a>
+        <a href="/" class="btn-primary" style="display:block;text-align:center;text-decoration:none;color:#fff">Go to AbhayaAI Bot</a>
         <div class="login-alt"><button class="btn-ghost" id="demo-btn">View with sample data</button></div>
       </div>
     </div>` : ''}
