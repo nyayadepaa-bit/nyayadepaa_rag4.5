@@ -169,7 +169,7 @@ function HeroAppPreview() {
           ))}
         </div>
         <div style={{ flex: 1, textAlign: 'center', fontSize: 13, fontWeight: 700, color: '#fde68a', letterSpacing: '0.02em' }}>
-          AbhayaAI — Legal Companion
+          NyayaDePAA — Legal Companion
         </div>
         <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#4ade80', boxShadow: '0 0 6px #4ade80' }} />
       </div>
@@ -245,7 +245,7 @@ function HeroAppPreview() {
             color: '#fff', fontSize: 11, fontWeight: 800, flexShrink: 0,
           }}>A</div>
           <div style={{ flex: 1 }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: '#78350f', marginBottom: 4 }}>AbhayaAI</div>
+            <div style={{ fontSize: 11, fontWeight: 700, color: '#78350f', marginBottom: 4 }}>NyayaDePAA</div>
             <div style={{ fontSize: 11.5, color: '#57534e', lineHeight: 1.6 }}>
               You may be entitled to a <strong style={{ color: '#b45309' }}>Protection Order</strong> under PWDVA §18 and monetary relief under §20.
             </div>
@@ -353,8 +353,8 @@ const LEGAL_LIBRARY = [
 
 /* ─── My Documents (no emoji icons) ───────────── */
 const MY_DOCUMENTS = [
-  { id: 'intake', abbr: 'AI', color: '#2563eb', title: 'Case Intake Summary', meta: 'AI Generated · Today', tags: [{ l: 'AI Generated', c: 'blue' }, { l: 'Current Case', c: 'green' }], desc: 'AI-generated summary of your case including key facts, timeline, parties involved, and identified legal issues.', content: 'This document is auto-generated after your AbhayaAI consultation. Start a conversation to build your case intake summary with all collected facts.', links: [{ label: 'NCW — Online Legal Consultation', url: 'https://ncwapps.nic.in/frmComplaint.aspx' }, { label: 'NALSA — Free Legal Aid', url: 'https://nalsa.gov.in/' }, { label: 'Legal Services India', url: 'http://www.legalservicesindia.com/' }] },
-  { id: 'laws', abbr: 'LAW', color: '#7c3aed', title: 'Applicable Laws Report', meta: 'AI Generated · Today', tags: [{ l: 'Legal Analysis', c: 'blue' }, { l: '10 Acts', c: 'amber' }], desc: 'List of Indian laws, IPC sections and court precedents applicable to your specific situation based on the facts you shared.', content: 'Complete a consultation first. Based on your case, AbhayaAI identifies relevant Indian acts, key sections, and applicable precedents from eCourts judgements.', links: [{ label: 'IndianKanoon — Case Law Search', url: 'https://indiankanoon.org/' }, { label: 'India Code — Official Legislation', url: 'https://www.indiacode.nic.in/' }, { label: 'Department of Justice, India', url: 'https://doj.gov.in/' }] },
+  { id: 'intake', abbr: 'AI', color: '#2563eb', title: 'Case Intake Summary', meta: 'AI Generated · Today', tags: [{ l: 'AI Generated', c: 'blue' }, { l: 'Current Case', c: 'green' }], desc: 'AI-generated summary of your case including key facts, timeline, parties involved, and identified legal issues.', content: 'This document is auto-generated after your NyayaDePAA consultation. Start a conversation to build your case intake summary with all collected facts.', links: [{ label: 'NCW — Online Legal Consultation', url: 'https://ncwapps.nic.in/frmComplaint.aspx' }, { label: 'NALSA — Free Legal Aid', url: 'https://nalsa.gov.in/' }, { label: 'Legal Services India', url: 'http://www.legalservicesindia.com/' }] },
+  { id: 'laws', abbr: 'LAW', color: '#7c3aed', title: 'Applicable Laws Report', meta: 'AI Generated · Today', tags: [{ l: 'Legal Analysis', c: 'blue' }, { l: '10 Acts', c: 'amber' }], desc: 'List of Indian laws, IPC sections and court precedents applicable to your specific situation based on the facts you shared.', content: 'Complete a consultation first. Based on your case, NyayaDePAA identifies relevant Indian acts, key sections, and applicable precedents from eCourts judgements.', links: [{ label: 'IndianKanoon — Case Law Search', url: 'https://indiankanoon.org/' }, { label: 'India Code — Official Legislation', url: 'https://www.indiacode.nic.in/' }, { label: 'Department of Justice, India', url: 'https://doj.gov.in/' }] },
   { id: 'protection', abbr: 'FORM', color: '#059669', title: 'Protection Order Application — Form I', meta: 'Template · PWDVA 2005', tags: [{ l: 'Downloadable', c: 'green' }, { l: 'PWDVA', c: 'blue' }], desc: 'Official Form I for applying for a Protection Order before the Magistrate under Protection of Women from Domestic Violence Act 2005.', content: 'Form I is filed under Section 12 of PWDVA 2005 to seek Protection Order, Residence Order, and Monetary Relief. Part A: Your details. Part B: Respondent details. Submit through a Protection Officer or directly at the Magistrate court.', links: [{ label: 'Download Form I — WCD Ministry (PDF)', url: 'https://wcd.nic.in/sites/default/files/wcd_domestic-violence.pdf' }, { label: 'eCourts — Locate Magistrate Court', url: 'https://districts.ecourts.gov.in/' }, { label: 'WCD — Protection Officers Directory', url: 'https://wcd.nic.in/' }] },
   { id: 'checklist', abbr: 'LIST', color: '#b45309', title: 'Evidence Checklist', meta: 'Template · Best Practices', tags: [{ l: 'Checklist', c: 'amber' }, { l: 'Evidence', c: 'red' }], desc: 'Checklist of evidence types to gather — medical reports, messages, photographs, witnesses, financial records.', content: 'Strong evidence significantly improves your case. Collect: (1) Medical injury reports from government hospital (2) Screenshot and backup of abusive messages (3) Photographs of injuries or damaged property (4) Witness names and contact numbers (5) Bank statements showing financial control (6) Audio or video recordings where legal (7) Documents showing husband income and property.', links: [{ label: 'National Cyber Crime Portal — Evidence', url: 'https://cybercrime.gov.in/' }, { label: 'NALSA — Legal Aid Authority', url: 'https://nalsa.gov.in/' }, { label: 'NCW — Women Helpline Support', url: 'https://ncw.nic.in/' }] },
   { id: 'maintenance', abbr: 'CrPC', color: '#0891b2', title: 'Maintenance Claim Guide — Section 125 CrPC', meta: 'Guide · Legal Process', tags: [{ l: 'Step-by-Step', c: 'green' }, { l: 'Maintenance', c: 'blue' }], desc: 'Step-by-step guide to filing a maintenance application in Magistrate court including forms, procedure, and timelines.', content: 'Step 1: File petition in Family Court or Magistrate court using Form II. Step 2: Attach income proof of husband (salary slip, ITR, bank statement). Step 3: Submit your monthly expense statement. Step 4: Court may grant interim maintenance within 60 days of filing. Step 5: Final maintenance order is passed after full hearing. No court fees are required. Free legal aid is available at your District Legal Services Authority (DLSA).', links: [{ label: 'NALSA — Free Legal Aid Authority', url: 'https://nalsa.gov.in/' }, { label: 'District Legal Services Locator', url: 'https://nalsa.gov.in/lsams/' }, { label: 'Read Section 125 CrPC — IndianKanoon', url: 'https://indiankanoon.org/doc/195908/' }] },
@@ -958,7 +958,7 @@ export default function App() {
     return (
       <div className="splash-screen">
         <span className="landing-brand-name landing-wordmark splash-wordmark">
-          Abhaya<span className="wordmark-accent">AI</span>
+          NyayaDe<span className="wordmark-accent">PAA</span>
         </span>
         <span className="splash-tagline">Confidential legal guidance, one conversation away.</span>
       </div>
@@ -973,7 +973,7 @@ export default function App() {
         <header className="landing-header" id="top">
           <div className="landing-header-left">
             <div className="landing-brand-text">
-              <span className="landing-brand-name landing-wordmark">Abhaya<span className="wordmark-accent">AI</span></span>
+              <span className="landing-brand-name landing-wordmark">NyayaDe<span className="wordmark-accent">PAA</span></span>
               <span className="landing-brand-sub">A Confidential Companion for Women's Safety</span>
             </div>
           </div>
@@ -1015,11 +1015,11 @@ export default function App() {
             <h1 className="landing-hero-title">
               Before the Petition.<br />
               Know Your Legal Remedies.<br />
-              <span className="accent">Speak with AbhayaAI.</span>
+              <span className="accent">Speak with NyayaDePAA.</span>
             </h1>
 
             <p className="landing-hero-sub">
-              AbhayaAI is a confidential first step for women who want to understand their legal
+              NyayaDePAA is a confidential first step for women who want to understand their legal
               options under the Protection of Women from Domestic Violence Act, 2005 — before any
               petition, lawyer fee, or court visit.
             </p>
@@ -1095,7 +1095,7 @@ export default function App() {
             <h2 className="landing-section-title2">Built to make the first step less overwhelming</h2>
             <p>
               Most women facing domestic violence never get past their first question: <em>"Do I even
-              have a case?"</em> AbhayaAI exists to answer that — privately, in plain language, before
+              have a case?"</em> NyayaDePAA exists to answer that — privately, in plain language, before
               any petition, lawyer fee, or court visit. It reads your situation against the Protection
               of Women from Domestic Violence Act, 2005 and related statutes, and explains what relief
               may be available to you.
@@ -1116,7 +1116,7 @@ export default function App() {
               <span className="landing-eyebrow-plain" style={{ marginBottom: 4 }}>Built &amp; Maintained By</span>
               <h3 className="landing-developer-name">Soham Rangdal</h3>
               <p className="landing-developer-bio">
-                Developer of the AbhayaAI platform — designing and building the product end-to-end.
+                Developer of the NyayaDePAA platform — designing and building the product end-to-end.
               </p>
               <a className="landing-developer-linkedin" href="https://www.linkedin.com/in/sohamrangdal" target="_blank" rel="noopener noreferrer">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.95v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
@@ -1131,7 +1131,7 @@ export default function App() {
           <div className="landing-footer-grid">
             <div className="landing-footer-col landing-footer-brand">
               <div className="landing-footer-brand-row">
-                <span className="landing-brand-name landing-wordmark" style={{ color: '#fff' }}>Abhaya<span className="wordmark-accent">AI</span></span>
+                <span className="landing-brand-name landing-wordmark" style={{ color: '#fff' }}>NyayaDe<span className="wordmark-accent">PAA</span></span>
               </div>
               <p>A confidential companion for women navigating domestic violence law in India.</p>
               <div className="landing-footer-quote-big">❝ Knowledge is Strength. Justice is Your Right. ❞</div>
@@ -1139,7 +1139,7 @@ export default function App() {
 
             <div className="landing-footer-col">
               <div className="landing-footer-col-title">Product</div>
-              <button onClick={() => setGuestModalOpen(true)}>Chat with AbhayaAI</button>
+              <button onClick={() => setGuestModalOpen(true)}>Chat with NyayaDePAA</button>
               <button onClick={() => setGuestModalOpen(true)}>Legal Library</button>
               <button onClick={() => setGuestModalOpen(true)}>My Documents</button>
               <button onClick={() => scrollToSection('top')}>Laws Covered</button>
@@ -1162,7 +1162,7 @@ export default function App() {
           </div>
 
           <div className="landing-footer-bottom">
-            <span>© 2025 AbhayaAI Project. All rights reserved.</span>
+            <span>© 2025 NyayaDePAA Project. All rights reserved.</span>
             <span>👤 Developed by <strong>Soham Rangdal</strong></span>
           </div>
         </footer>
@@ -1239,7 +1239,7 @@ export default function App() {
                   </svg>
                 </div>
                 <div style={{ fontSize: 21, fontWeight: 800, color: '#111', letterSpacing: '-0.02em', marginBottom: 8 }}>
-                  Welcome to AbhayaAI
+                  Welcome to NyayaDePAA
                 </div>
                 <div style={{ fontSize: 13, color: '#6b7280', lineHeight: 1.65, maxWidth: 300, margin: '0 auto' }}>
                   Your confidential legal companion. <strong style={{ color: '#374151' }}>No account needed.</strong> All conversations are private.
@@ -1337,7 +1337,7 @@ export default function App() {
       <aside className={`app-sidebar${sidebarOpen ? ' open' : ''}`}>
         <div className="sidebar-top">
           <div className="sidebar-brand" onClick={() => setShowLanding(true)} style={{ cursor: 'pointer' }}>
-            <span className="sidebar-brand-name landing-wordmark">Abhaya<span className="wordmark-accent">AI</span></span>
+            <span className="sidebar-brand-name landing-wordmark">NyayaDe<span className="wordmark-accent">PAA</span></span>
           </div>
           <button className="new-conv-btn" onClick={resetChat}>+ New conversation</button>
         </div>
@@ -1401,7 +1401,7 @@ export default function App() {
           <div className="top-bar-left">
             <button className="menu-btn-nav" onClick={() => setSidebarOpen(p => !p)}>☰</button>
             <div className="top-bar-brand">
-              <span className="top-bar-name landing-wordmark">Abhaya<span className="wordmark-accent">AI</span></span>
+              <span className="top-bar-name landing-wordmark">NyayaDe<span className="wordmark-accent">PAA</span></span>
             </div>
           </div>
           <div className="top-bar-right">
@@ -1466,7 +1466,7 @@ export default function App() {
                   {/* Welcome screen */}
                   {showWelcome && (
                     <div className="welcome-screen">
-                      <h2 className="welcome-heading">How AbhayaAI Can Help</h2>
+                      <h2 className="welcome-heading">How NyayaDePAA Can Help</h2>
                       <div className="feature-grid">
                         {[
                           { c: 'teal', icon: '💬', title: 'Narrate Your Situation', desc: 'Share what happened, in your own words, confidentially. We turn it into a clear summary of your case.', prompt: 'I need legal help with my situation' },
@@ -1540,7 +1540,7 @@ export default function App() {
                             <div className="analysis-card">
                               <div className="analysis-card-header">
                                 <span style={{ fontSize: 15 }}>⚖️</span>
-                                <span className="analysis-card-header-title">AbhayaAI Legal Analysis</span>
+                                <span className="analysis-card-header-title">NyayaDePAA Legal Analysis</span>
                                 <span className="analysis-badge">Complete</span>
                               </div>
                               {Object.entries(msg.finalResponse).map(([title, content]) => {
@@ -1809,7 +1809,7 @@ export default function App() {
                 value={inputText}
                 onChange={e => { setInputText(e.target.value); autoResize(); }}
                 onKeyDown={handleKeyDown}
-                placeholder={lang === 'hi' ? 'अभयAI से कुछ भी पूछें…' : lang === 'mr' ? 'अभयAI ला काहीही विचारा…' : 'Ask AbhayaAI anything…'}
+                placeholder={lang === 'hi' ? 'अभयAI से कुछ भी पूछें…' : lang === 'mr' ? 'अभयAI ला काहीही विचारा…' : 'Ask NyayaDePAA anything…'}
                 disabled={loading}
                 rows={1}
               />
